@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/hdjs.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/search.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/operation.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/hdjs.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="panel panel-info">
+    <div class="panel-heading">
+        用户列表
+    </div>
+    <div class="panel-footer">
+        <a href="{|U:'addNewUser'}" type="button" class="btn btn-info">添加新用户</a>
+    </div>
+
+</div>
+<table class="table">
+    <tr>
+        <th width="50"></th>
+        <th width="120">用户名</th>
+        <th width="150">用户权限</th>
+        <th width="200">最后登录时间</th>
+        <th width="80">操作</th>
+        <th></th>
+    </tr>
+    <list from="$data" name="$d">
+        <tr>
+            <td></td>
+            <td>{$d.username}</td>
+            <td>{$d.role_name}</td>
+            <td>
+                <if value="$d.logintime">
+                    {$d.logintime|date:'Y-m-d H:i:s',@@}
+                </if>
+            </td>
+            <td>
+                <a href="javascript:;" class="btn btn-danger btn-xs delButton" _id="{$d.aid}">删除</a>
+            </td>
+            <td></td>
+        </tr>
+    </list>
+</table>
+<!-- 删除确认 模态框 -->
+<div id="delModal" class="modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">删除确认</h4>
+            </div>
+            <div class="modal-body">
+                <p>确认要删除吗？</p>
+                <form id="delForm">
+                    <input type="hidden" name="id"/>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+                <a href="javascript:;" id="delConfirm" type="button" class="btn btn-primary">
+                    确 定
+                </a>
+                <script type="text/javascript">
+                    $('#delConfirm').click(function(){
+                        $('#delModal').modal('hide')
+                        hd_ajax("{|U:'del'}", $('#delForm').serialize(), function(){
+                            location.reload()
+                            return false;
+                        });
+                    })
+                </script>
+            </div>
+        </div><!-- /.Modal-content -->
+    </div><!-- /.Modal-dialog -->
+</div>
+<!-- 删除确认 模态框 -->
+</body>
+</html>

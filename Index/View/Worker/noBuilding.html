@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap-datetimepicker.min.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.0.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+
+</head>
+<body>
+	<div id="search" class="fixed">
+        <form action="{|U:'search'}" method="post">
+		    <div class="input-group col-xs-5 center">
+                <input type="text" class="form-control searchInput" value="{$hd.get.keyword}" name="keyword" placeholder="在 职工区域 搜索...">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit" >搜索</button>
+                </span>
+	        </div>
+             <!--搜索框获得焦点后弹出提示框 -->
+            <script type="text/javascript" src="__PUBLIC__/js/search.js"></script>
+        </form>
+	</div>
+    <!-- 选择楼号 -->
+    <div class="notice bg-danger">
+        <div class="btn-group">
+            <a href="{|U:'Worker/index', array('b'=>'高1')}"
+               class="btn btn-default">高1</a>
+            <a href="{|U:'Worker/index', array('b'=>'高2')}"
+               class="btn btn-default">高2</a>
+        </div>
+    </div>
+</body>
+</html>

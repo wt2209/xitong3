@@ -1,0 +1,86 @@
+<!-- 修改 模态框 -->
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">修改信息</h4>
+            </div>
+            <div class="modal-body">
+                <form id="DispatchEditForm" class="form-horizontal">
+                    <!-- 姓名 -->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"><span style="color:#ff0000">*</span>姓名</label>
+                        <div class="col-sm-10">
+                            <input type="hidden" name="id" value="{$person.id}"/>
+                            <input class="form-control" type="text" name="name" value="{$person.name}">
+                        </div>
+                    </div>
+                    <!-- 性别 -->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">性别</label>
+                        <div class="col-sm-10 radio">
+                            <label>
+                                <input type="radio" name="sex" value="1" <if value="$person.sex == 1">checked</if>>男
+                            </label>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label>
+                                <input type="radio" name="sex" value="2" <if value="$person.sex == 2">checked</if>>女
+                            </label>
+                        </div>
+                    </div>
+                    <!-- 床号 -->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">床号</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="bed_number" type="text" <if value="$person.bed_number">value="{$person.bed_number}"</if>>
+                        </div>
+                    </div>
+                    <!-- 公司 -->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">公司</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="department" type="text" value="{$person.department}">
+                        </div>
+                    </div>
+                    <!-- 电话 -->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">电话</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="tel" type="text" value="{$person.tel}">
+                        </div>
+                    </div>
+                    <!-- 入住时间 -->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">入住时间</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" name="entrancetime" type="text" value="{$person.entrancetime}">
+                        </div>
+                    </div>
+                    <!-- 备注 -->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">备注</label>
+                        <div class="col-sm-10">
+                            <textarea name="remark" class="form-control" rows="3">{$person.remark}</textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+                <a href="javascript:;" type="button" id="DispatchEditConfirm" class="btn btn-primary">确 定</a>
+                <script type="text/javascript">
+                    $('#DispatchEditConfirm').click(function(){
+                        //清空原数据
+                        $(this).find('input').val('');
+                        $(this).find('textarea').html('');
+                        $('#MyModal').modal('hide')
+                        hd_ajax("{|U:'Dispatch/edit'}", $('#DispatchEditForm').serialize(), function(){
+                            // location.reload(true) 会强制刷新页面，导致滚动条归零（firefox）
+                            location.reload();
+                            return false;
+                        });
+                    })
+                </script>
+            </div>
+        </div>
+    </div>
+<!-- 修改 结束 模态框 -->

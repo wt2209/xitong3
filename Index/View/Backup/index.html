@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <title>还原备份</title>
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/hdjs.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/search.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/operation.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/hdjs.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        还原备份
+    </div>
+    <div class="panel-body checkbox">
+        <table class="table">
+            <tr>
+                <th>备份目录</th>
+                <th>备份时间</th>
+                <th>大小</th>
+                <th width="150">操作</th>
+                <th></th>
+            </tr>
+            <list from="$dir" name="$d">
+                <tr>
+                    <td>{$d.filename}</td>
+                    <td>{$d.filemtime|date:'Y-m-d H:i:s',@@}</td>
+                    <td>{$d.size|get_size}</td>
+                    <td>
+                        <a href="{|U:recovery,array('dir'=>$d['filename'])}" class="btn btn-success btn-xs">还原</a>
+                        <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
+                    </td>
+                    <td></td>
+                </tr>
+            </list>
+        </table>
+    </div>
+</div>
+</body>
+</html>

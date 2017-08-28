@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/hdjs.css">
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap-datetimepicker.min.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap-datetimepicker.min.js"></script>
+    <style>
+        table, table tr, table td, table th{
+            text-align: center;
+        }
+        .mr10{
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<ul class="nav nav-tabs mr10" >
+    <li class="active"><a href="#general" data-toggle="tab">概况</a></li>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane active" id="general">
+        <table class="table table-bordered mr10">
+            <tr>
+                <th></th>
+                <th width="50">楼号</th>
+                <foreach from="$room" key="$building" value="$number">
+                    <td width="60">{$building}#</td>
+                </foreach>
+                <th width="60">合计</th>
+                <th></th>
+            </tr>
+            <tr>
+                <td></td>
+                <th>人数</th>
+                <foreach from="$room" key="$building" value="$number">
+                    <td>{$number}</td>
+                </foreach>
+                <th>{$room|array_sum}</th>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script>
+    $('.nav-tabs').find('li').eq(0).addClass('active');
+    $('.tab-pane').eq(0).addClass('active');
+    $('a').focus(function(){
+        $(this).blur();
+    })
+</script>
+
+<!--<div class="notice bg-danger">
+    全部共 {$count} 条缴费记录，费用总计 {$sum} 元<br />
+    <span style="font-size: 12px;">（当前只显示最新的 50 条缴费信息。若要查看更多，请设定查询条件。）</span>
+</div>-->
+
+</body>
+</html>

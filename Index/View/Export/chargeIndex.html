@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>费用报表</title>
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/hdjs.css">
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap-datetimepicker.min.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/search.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap-datetimepicker.min.js"></script>
+
+</head>
+<body>
+<div class="panel panel-info">
+    <div class="panel-heading">
+        租赁缴费报表
+    </div>
+    <div class="panel-body checkbox">
+        <p style="color:#555">请设定查询条件：</p>
+        <form id="rentCharge" action="{|U:'rentCharge'}" method="post">
+            <div class="form-group"  style="width:830px;" >
+                <div class="col-xs-1 hd-w120" style="padding:0 2px">
+                    <input type="text" readonly class="form-control" name="startTime" id="rentStartTime" placeholder="开始时间">
+                    <script type="text/javascript">
+                        $('#rentStartTime').datetimepicker({
+                            language:'cn',
+                            format: 'yyyy-mm-dd',
+                            todayBtn:true,
+                            autoclose:true,
+                            minView:2,
+                            viewSelect:'month'
+                        });
+                    </script>
+                </div>
+                <div class="col-xs-2  hd-w120" style="padding:0 2px">
+                    <input type="text" readonly class="form-control" name="endTime" id="rentEndTime" placeholder="截止时间">
+                    <script type="text/javascript">
+                        $('#rentEndTime').datetimepicker({
+                            language:'cn',
+                            format: 'yyyy-mm-dd',
+                            todayBtn:true,
+                            autoclose:true,
+                            minView:2,
+                            viewSelect:'month'
+                        });
+                    </script>
+                </div>
+                <div class="col-xs-1  hd-w120" style="padding:0 2px">
+                    <select name="rentChargeType" class="form-control">
+                        <option value="0">类型(全部)</option>
+                        <foreach from="$rentChargeType" key="$k" value="$v">
+                            <option value="{$k}">{$v.title}</option>
+                        </foreach>
+                    </select>
+                </div>
+                <div class="col-xs-1 hd-w120" style="padding:0 2px">
+                    <select name="quarter" class="form-control">
+                        <option value="0">季度(全部)</option>
+                        <list from="$quarters" name="$q">
+                            <option value="{$q}">第{$q}季度</option>
+                        </list>
+                    </select>
+                </div>
+                <div class="col-xs-4" style="padding:0 2px">
+                    <input type="text" class="form-control searchInput" value="{$hd.get.keyword}" name="keyword"
+                           placeholder="在 租赁费用区域 搜索...">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="panel-footer">
+        <input type="button" class="btn btn-info" onclick="$('#rentCharge').submit()" value="提交"/>
+    </div>
+</div>
+
+<div class="panel panel-success">
+    <div class="panel-heading">
+        单身床位费报表
+    </div>
+    <div class="panel-body checkbox">
+        <p style="color:#555">请设定查询条件：</p>
+        <form id="singleRentCharge" action="{|U:'singleRentCharge'}" method="post">
+            <div class="form-group"  style="width:830px;" >
+                <div class="col-xs-1 hd-w120" style="padding:0 2px">
+                    <input type="text" readonly class="form-control" name="startTime" id="singleRentStartTime" placeholder="开始时间">
+                    <script type="text/javascript">
+                        $('#singleRentStartTime').datetimepicker({
+                            language:'cn',
+                            format: 'yyyy-mm-dd',
+                            todayBtn:true,
+                            autoclose:true,
+                            minView:2,
+                            viewSelect:'month'
+                        });
+                    </script>
+                </div>
+                <div class="col-xs-2  hd-w120" style="padding:0 2px">
+                    <input type="text" readonly class="form-control" name="endTime" id="singleRentEndTime" placeholder="截止时间">
+                    <script type="text/javascript">
+                        $('#singleRentEndTime').datetimepicker({
+                            language:'cn',
+                            format: 'yyyy-mm-dd',
+                            todayBtn:true,
+                            autoclose:true,
+                            minView:2,
+                            viewSelect:'month'
+                        });
+                    </script>
+                </div>
+                <div class="col-xs-1  hd-w120" style="padding:0 2px">
+                    <select name="chargeType" class="form-control">
+                        <option value="0">类型(全部)</option>
+                        <foreach from="$singleRentChargeType" key="$k" value="$v">
+                            <option value="{$k}">{$v.title}</option>
+                        </foreach>
+                    </select>
+                </div>
+                <div class="col-xs-4" style="padding:0 2px">
+                    <input type="text" class="form-control searchInput" value="{$hd.get.keyword}" name="keyword"
+                           placeholder="在 租赁费用区域 搜索...">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="panel-footer">
+        <input type="button" class="btn btn-success" onclick="$('#singleRentCharge').submit()" value="提交"/>
+    </div>
+</div>
+
+<div class="panel panel-danger">
+    <div class="panel-heading">
+        单身水电费报表
+    </div>
+    <div class="panel-body checkbox">
+        <p style="color:#555">请设定查询条件：</p>
+        <form id="singleSDCharge" action="{|U:'singleSDCharge'}" method="post">
+            <div class="form-group"  style="width:900px;" >
+                <!--<div class="col-xs-1 hd-w120" style="padding:0 2px">
+                    <input type="text" readonly class="form-control" name="startTime" id="singleSDStartTime" placeholder="开始时间">
+                    <script type="text/javascript">
+                        $('#singleSDStartTime').datetimepicker({
+                            language:'cn',
+                            format: 'yyyy-mm-dd',
+                            todayBtn:true,
+                            autoclose:true,
+                            minView:2,
+                            viewSelect:'month'
+                        });
+                    </script>
+                </div>
+                <div class="col-xs-2  hd-w120" style="padding:0 2px">
+                    <input type="text" readonly class="form-control" name="endTime" id="singleSDEndTime" placeholder="截止时间">
+                    <script type="text/javascript">
+                        $('#singleSDEndTime').datetimepicker({
+                            language:'cn',
+                            format: 'yyyy-mm-dd',
+                            todayBtn:true,
+                            autoclose:true,
+                            minView:2,
+                            viewSelect:'month'
+                        });
+                    </script>
+                </div>-->
+                <div class="col-xs-1  hd-w120" style="padding:0 2px">
+                    <select name="year" class="form-control">
+                        <option value="0">年度(全部)</option>
+                        <foreach from="$year" key="$k" value="$v">
+                            <option value="{$v}">{$v}</option>
+                        </foreach>
+                    </select>
+                </div>
+                <div class="col-xs-1  hd-w120" style="padding:0 2px">
+                    <select name="month" class="form-control">
+                        <option value="0">月度(全部)</option>
+                        <foreach from="$month" key="$k" value="$v">
+                            <option value="{$v}">{$v}</option>
+                        </foreach>
+                    </select>
+                </div>
+                <div class="col-xs-1 hd-w100" style="padding:0 2px">
+                    <select name="isCharged" class="form-control">
+                        <option value="0">未缴费</option>
+                        <option value="1" selected>已缴费</option>
+                        <option value="2">全部</option>
+                    </select>
+                </div>
+                <div class="col-xs-4" style="padding:0 2px">
+                    <input type="text" class="form-control searchInput" value="" name="keyword"
+                           placeholder="房间号">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="panel-footer">
+        <input type="button" class="btn btn-danger" onclick="$('#singleSDCharge').submit()" value="提交"/>
+    </div>
+</div>
+<!--占位-->
+<div style="height:200px;"></div>
+</body>
+</html>

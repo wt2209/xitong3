@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/hdjs.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/checkboxAllAndReverse.js"></script>
+
+</head>
+<body>
+<div class="panel panel-info">
+    <div class="panel-heading">
+        导出大学生信息
+    </div>
+    <div class="panel-body checkbox">
+        <label><input type="checkbox" class="selectAll"/>全选</label>&nbsp;&nbsp;
+        <label><input type="checkbox" class="reverse"/>反选</label><br/><br/>
+        <form id="college" action="{|U:'college'}" method="post">
+            <label><input type="checkbox" id="111" name="building[]" value="红2"/>红2</label>&nbsp;&nbsp;&nbsp;
+            <label><input type="checkbox" name="building[]" value="红3"/>红3</label>&nbsp;&nbsp;&nbsp;
+            <label><input type="checkbox" name="building[]" value="7"/>7</label>&nbsp;&nbsp;&nbsp;
+            <label><input type="checkbox" name="building[]" value="9"/>9</label>&nbsp;&nbsp;&nbsp;
+            <label><input type="checkbox" name="building[]" value="11"/>11</label>&nbsp;&nbsp;&nbsp;
+        </form>
+    </div>
+    <div class="panel-footer">
+        <input type="button" class="btn btn-info" onclick="$('#college').submit()" value="提交"/>
+    </div>
+</div>
+
+<div class="panel panel-success">
+    <div class="panel-heading">
+        导出职工信息
+    </div>
+    <div class="panel-body checkbox">
+        <label><input type="checkbox" class="selectAll"/>全选</label>&nbsp;&nbsp;
+        <label><input type="checkbox" class="reverse"/>反选</label><br/><br/>
+        <form id="worker" action="{|U:'worker'}" method="post">
+            <label><input type="checkbox" name="building[]" value="高2"/>高2</label>&nbsp;&nbsp;&nbsp;
+        </form>
+    </div>
+    <div class="panel-footer">
+        <input type="button" class="btn btn-success" onclick="$('#worker').submit()" value="提交"/>
+    </div>
+</div>
+
+<div class="panel panel-danger">
+    <div class="panel-heading">
+        导出租赁户信息
+    </div>
+    <div class="panel-body checkbox">
+        <label><input type="checkbox" class="selectAll"/>全选</label>&nbsp;&nbsp;
+        <label><input type="checkbox" class="reverse"/>反选</label><br/><br/>
+        <form id="rent" action="{|U:'rent'}" method="post">
+            <label><input type="checkbox" name="building[]" value="高1"/>高1</label>&nbsp;&nbsp;&nbsp;
+            <label><input type="checkbox" name="building[]" value="高3"/>高3</label>&nbsp;&nbsp;&nbsp;
+            <label><input type="checkbox" name="building[]" value="高4"/>高4</label>&nbsp;&nbsp;&nbsp;
+            <label><input type="checkbox" name="building[]" value="1"/>1</label>&nbsp;&nbsp;&nbsp;
+            <label><input type="checkbox" name="building[]" value="2"/>2</label>&nbsp;&nbsp;&nbsp;
+            <label><input type="checkbox" name="building[]" value="3"/>3</label>&nbsp;&nbsp;&nbsp;
+            <label><input type="checkbox" name="building[]" value="4"/>4</label>&nbsp;&nbsp;&nbsp;
+            <label><input type="checkbox" name="building[]" value="5"/>5</label>&nbsp;&nbsp;&nbsp;
+            <label><input type="checkbox" name="building[]" value="6"/>6</label>&nbsp;&nbsp;&nbsp;
+            <label><input type="checkbox" name="building[]" value="8"/>8</label>&nbsp;&nbsp;&nbsp;
+            <label><input type="checkbox" name="building[]" value="10"/>10</label>&nbsp;&nbsp;&nbsp;
+            <label><input type="checkbox" name="building[]" value="12"/>12</label>&nbsp;&nbsp;&nbsp;
+            <label><input type="checkbox" name="building[]" value="14"/>14</label>&nbsp;&nbsp;&nbsp;
+            <label><input type="checkbox" name="building[]" value="红1"/>红1</label>&nbsp;&nbsp;&nbsp;
+        </form>
+    </div>
+    <div class="panel-footer">
+        <input type="button" class="btn btn-danger" onclick="$('#rent').submit()" value="提交"/>
+    </div>
+</div>
+<!--占位-->
+<div style="height:200px;"></div>
+</body>
+</html>

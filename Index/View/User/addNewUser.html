@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加新用户</title>
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/hdjs.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/search.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/hdjs.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <a href="{|U:'index'}" class="btn btn-info">返回用户列表</a>
+        添加新用户
+    </div>
+    <div class="panel-body checkbox">
+        <form id="addNewUserForm">
+            <table class="table">
+                <tr>
+                    <th width="100">用户名</th>
+                    <td width="240"><input type="text" name="username" class="form-control"/></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th style="vertical-align: middle">用户权限</th>
+                    <td>
+                        <select name="rid" class="form-control" >
+                            <option value="0">== 选择权限 ==</option>
+                            <list from="$auth" name="$a">
+                                <option value="{$a.rid}">{$a.role_name}</option>
+                            </list>
+                        </select>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th style="vertical-align: middle">初始密码</th>
+                    <td><input type="password" name="password" class="form-control"/></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th style="vertical-align: middle">确认密码</th>
+                    <td><input type="password" name="confirmPassword" class="form-control"/></td>
+                    <td></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div class="panel-footer">
+        <input type="button" class="btn btn-info" id="formSubmit" value="提交"/>
+    </div>
+</div>
+<script>
+    $('#formSubmit').click(function(){
+        var sUserName = $('input[name=username]').val();
+        var sPassword = $('input[name=password]').val();
+        var sConfirmPassword = $('input[name=confirmPassword]').val();
+        var iRid = parseInt($('select option:selected').attr('value'));
+        if (!sUserName) {
+            hd_alert({'message':'错误：用户名不能为空！'});
+            return false;
+        }
+        if (!iRid) {
+            hd_alert({'message':'错误：请为用户选择一个角色！'});
+            return false;
+        }
+        if (sPassword != sConfirmPassword) {
+            hd_alert({'message':'错误：两次密码不一致！'});
+            return false;
+        }
+        hd_ajax("{|U:'addNewUser'}", $('#addNewUserForm').serialize(), function(){
+            location.reload();
+            return false;
+        });
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/room_list.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/map.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/hdjs.css">
+	<link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap-datetimepicker.min.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.0.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/room_list.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/hdjs.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/operation.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/room-remark.js"></script>
+
+</head>
+<body>
+	<div id="search" class="fixed">
+        <form action="{|U:'search'}" method="post">
+		    <div class="input-group col-xs-5 center">
+                <input type="text" class="form-control searchInput" value="{$hd.get.keyword}" name="keyword" placeholder="在 职工区域 搜索...">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">搜索</button>
+                </span>
+	        </div>
+             <!--搜索框获得焦点后弹出提示框 -->
+            <script type="text/javascript" src="__PUBLIC__/js/search.js"></script>
+        </form>
+	</div>
+	<div id="map">
+        <!-- 选择楼号 -->
+        <div class="building fixed">
+            <div class="btn-group-vertical">
+                <a href="{|U:'Worker/index', array('b'=>'高1')}"
+                   class="btn btn-default <if value="$hd.get.b == '高1'">btn-primary</if>">高1</a>
+                <a href="{|U:'Worker/index', array('b'=>'高2')}"
+                   class="btn btn-default <if value="$hd.get.b == '高2'">btn-primary</if>">高2</a>
+            </div>
+        </div>
+        <script type="text/javascript" src="__PUBLIC__/js/buildingPosition.js"></script>
+        <!-- 选择楼号 -->
+	</div>
+
+	<div id="content">
+        <if value="$room">
+            <p class="bg-success mr160 error-message" >共找到 {$room[0]['realCount']} 个满足条件的住户</p>
+            <list from="$room" name="$r">
+                <div class="room">
+                    <div class="title">
+                        <h3>
+                            <a href="{|U:'search', array('keyword'=>$r['building'].'-'.$r['room'])}" class="room-name">{$r.building}-{$r.room}</a>
+                            <input type="hidden" name="room_id" value="{$r.room_id}"/>
+                            <p class="operation">
+                                <a href="javascript:;" _url="{|U:'Modal/workerSDChargeModal', array('room_id'=>$r['room_id'],'type'=>2)}"
+                                   class="btn btn-success btn-xs modalShow">水电费</a>
+                            </p>
+                        </h3>
+                        <div class="room_detail">
+                            <span>{$r.room_remark}</span>
+                            <form name="room_remark">
+                                <input type="hidden" name="room_id" value="{$r.room_id}"/>
+                                <textarea name="room_remark" class="form-control hide" _url="{|U:'Room/setRoomRemark'}"></textarea>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="person_area">
+                        <?php for($i=0;$i<$r['length'];$i++): $p = isset($r['persons'][$i])?$r['persons'][$i]:'';?>
+                            <if value="$p">
+                                <div class="person college_person">
+                                    <p class="operation">
+                                        <a href="javascript:;" class="btn btn-primary btn-xs modalShow" _url="{|U:'Modal/workerRentChargeModal', array('id'=>$p['id'],'type'=>2)}">床位费</a>
+                                    </p>
+                                    <div class="title">
+                                        <div class="name">
+                                            {$p.name}
+                                            <if value="$p.edu">
+                                                <span class="fs12">(研究生)</span>
+                                            </if>
+                                        </div>
+                                    </div>
+                                    <div class="l">
+                                        <p class="department">{$p.department}</p>
+                                        <p class="telphone"><if value="$p.tel">{$p.tel}</if></p>
+                                    </div>
+                                    <div class="r">
+                                        <if value="$p.entrancetime">
+                                            <p class="department">进厂时间：</p>
+                                            <p class="department">{$p.entrancetime}&nbsp;</p>
+                                        <else/>
+                                            <p class="department">&nbsp;</p>
+                                            <p class="department">&nbsp;</p>
+                                        </if>
+                                    </div>
+                                    <div class="d">
+                                        <p class="remark"><strong>备注：</strong>{$p.remark}</p>
+                                        <a href="javascript:;" _id="{$p.id}"
+                                           class="btn btn-warning btn-xs quitButton" >退房</a>
+                                        <a href="javascript:;" _url="{|U:'Modal/MoveModal', array('id'=>$p['id'],'type'=>2)}"
+                                           class="btn btn-success btn-xs modalShow">调房</a>
+                                        <a href="javascript:;" _url="{|U:'Modal/EditModal', array('id'=>$p['id'],'type'=>2)}"
+                                           class="btn btn-success btn-xs modalShow" >修改</a>
+                                        <a href="javascript:;" _id="{$p.id}"
+                                           class="btn btn-danger btn-xs delButton">删除</a>
+                                    </div>
+                                </div>
+                                <else/>
+                                <div class="person">
+                                    <a href="javascript:;" class="single_empty modalShow" _room_id="{$r.room_id}"
+                                       _url="{|U:'Modal/AddModal', array('room_id'=>$r['room_id'],'type'=>2)}" title="点击进行入住操作"></a>
+                                </div>
+                            </if>
+                        <?php endfor;?>
+                    </div>
+                </div>
+            </list>
+        <else/>
+            <p class="bg-warning mr160 error-message" >没有找到满足条件的信息。。。</p>
+        </if>
+	</div>
+
+
+
+    <!-- 退房确认 模态框 -->
+    <div id="quitModal" class="modal fade">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">退房确认</h4>
+                </div>
+                <div class="modal-body">
+                    <p>确认要进行退房操作吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <form id="quitForm">
+                        <input type="hidden" name="id" value=""/>
+                    </form>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+                    <a href="javascript:;" id="quitConfirm" type="button" class="btn btn-primary">确 定</a>
+                    <script type="text/javascript">
+                        $('#quitConfirm').click(function(){
+                            $('#quitModal').modal('hide')
+                            hd_ajax("{|U:'quit'}", $('#quitForm').serialize(), function(){
+                                location.reload()
+                                return false;
+                            });
+                        })
+                    </script>
+                </div>
+            </div><!-- /.Modal-content -->
+        </div>
+    </div>
+    <!-- 退房确认 模态框 -->
+
+    <!-- 删除确认 模态框 -->
+    <div id="delModal" class="modal fade">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">删除确认</h4>
+                </div>
+                <div class="modal-body">
+                    <p>确认要删除吗？</p>
+                    <form id="delForm">
+                        <input type="hidden" name="id"/>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+                    <a href="javascript:;" id="delConfirm" type="button" class="btn btn-primary">确 定</a>
+                    <script type="text/javascript">
+                        $('#delConfirm').click(function(){
+                            $('#delModal').modal('hide')
+                            hd_ajax("{|U:'del'}", $('#delForm').serialize(), function(){
+                                location.reload()
+                                return false;
+                            });
+                        })
+                    </script>
+                </div>
+            </div><!-- /.Modal-content -->
+        </div><!-- /.Modal-dialog -->
+    </div>
+    <!-- 删除确认 模态框 -->
+
+
+    <!-- 模态框 -->
+    <div id="MyModal" class="modal fade"></div>
+    <script type="text/javascript">
+        $('#MyModal').on('shown.bs.modal', function (e) {
+            $('#MyModal').find('input').eq(1).focus();
+        })
+    </script>
+
+</body>
+</html>

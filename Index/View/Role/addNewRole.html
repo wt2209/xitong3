@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加新角色</title>
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/hdjs.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/hdjs.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <a href="{|U:'index'}" class="btn btn-info">返回角色列表</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;添加新角色
+    </div>
+    <div class="panel-body">
+        <form  method="post" id="addNewRoleForm">
+            <table class="table">
+                <tr>
+                    <th width="100">角色名</th>
+                    <td width="320">
+                        <input type="text" class="form-control" name="role_name"/>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>描述</th>
+                    <td style="text-align:left;">
+                        <textarea name="remark" class="form-control" style="resize: none"></textarea>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:left;">
+                        <span style="color:red">提示：</span>新添加的角色不具备任何权限，必须配置权限后才可使用
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div class="panel-footer">
+        <input type="button" class="btn btn-success" id="formSubmit" value="添加"/>
+    </div>
+</div>
+<script>
+    $('#formSubmit').click(function(){
+        var sRoleName = $('input[name=role_name]').val();
+        if (!sRoleName) {
+            hd_alert({'message':'错误：角色名不能为空！'});
+            return false;
+        }
+        hd_ajax("{|U:'addNewRole'}", $('#addNewRoleForm').serialize(), function(){
+            location.reload();
+            return false;
+        });
+    })
+</script>
+</body>
+</html>

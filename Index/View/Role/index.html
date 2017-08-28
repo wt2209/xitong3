@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>角色列表</title>
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/hdjs.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/search.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/operation.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/hdjs.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="panel panel-info">
+    <div class="panel-heading">
+        角色列表
+    </div>
+    <div class="panel-footer">
+        <a href="{|U:'addNewRole'}" type="button" class="btn btn-info">添加新角色</a>
+    </div>
+</div>
+<table class="table">
+    <tr>
+        <th width="20"></th>
+        <th width="50">RID</th>
+        <th width="120">角色名</th>
+        <th width="200">描述</th>
+        <td width="100">系统</td>
+        <th width="300">操作</th>
+        <th></th>
+    </tr>
+    <list from="$data" name="$n">
+        <tr>
+            <td></td>
+            <td>{$n.rid}</td>
+            <td>{$n.role_name}</td>
+            <td>
+                {$n.remark}
+            </td>
+            <td>
+                <if value="$n.issystem">
+                    <span style="color:red">√</span>
+                    <else/>
+                    <span>×</span>
+                </if>
+            </td>
+            <td>
+                <if value="$n.issystem == 0">
+                    <a href="{|U:'setAccess',array('rid'=>$n['rid'])}" class="btn btn-success btn-xs">配置权限</a>
+                    <a href="javascript:;" class="btn btn-danger btn-xs delButton" _id="{$n.rid}">删除</a>
+                </if>
+            </td>
+            <td></td>
+        </tr>
+    </list>
+</table>
+<!-- 删除确认 模态框 -->
+<div id="delModal" class="modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">删除确认</h4>
+            </div>
+            <div class="modal-body">
+                <p>确认要删除吗？</p>
+                <form id="delForm">
+                    <input type="hidden" name="id"/>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+                <a href="javascript:;" id="delConfirm" type="button" class="btn btn-primary">
+                    确 定
+                </a>
+                <script type="text/javascript">
+                    $('#delConfirm').click(function(){
+                        $('#delModal').modal('hide')
+                        hd_ajax("{|U:'del'}", $('#delForm').serialize(), function(){
+                            location.reload()
+                            return false;
+                        });
+                    })
+                </script>
+            </div>
+        </div><!-- /.Modal-content -->
+    </div><!-- /.Modal-dialog -->
+</div>
+<!-- 删除确认 模态框 -->
+</body>
+</html>

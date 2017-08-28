@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh_CN" style="overflow: hidden;">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta charset="utf-8">
+    <title>职工公寓管理系统</title>
+
+    <meta name="description" content="This is page-header (.page-header &gt; h1)">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="__CONTROLLER_VIEW__/statics/simpleboot/themes/flat/theme.min.css" rel="stylesheet">
+    <link href="__CONTROLLER_VIEW__/statics/simpleboot/css/simplebootadmin.css" rel="stylesheet">
+    <link href="__CONTROLLER_VIEW__/statics/simpleboot/font-awesome/4.2.0/css/font-awesome.min.css"  rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="__CONTROLLER_VIEW__/statics/css/index.css">
+    <!--[if IE 7]>
+    <link rel="stylesheet" href="__CONTROLLER_VIEW__/statics/simpleboot/font-awesome/4.2.0/css/font-awesome-ie7.min.css">
+    <![endif]-->
+    <link rel="stylesheet" href="__CONTROLLER_VIEW__/statics/simpleboot/themes/flat/simplebootadminindex.min.css">
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="__CONTROLLER_VIEW__/statics/simpleboot/css/simplebootadminindex-ie.css?" />
+    <![endif]-->
+    <style>
+        .navbar .nav_shortcuts .btn{margin-top: 5px;}
+
+        /*-----------------导航hack--------------------*/
+        .nav-list>li.open{position: relative;}
+        .nav-list>li.open .back {display: none;}
+        .nav-list>li.open .normal {display: inline-block !important;}
+        .nav-list>li.open a {padding-left: 7px;}
+        .nav-list>li .submenu>li>a {background: #fff;}
+        .nav-list>li .submenu>li a>[class*="fa-"]:first-child{left:20px;}
+        .nav-list>li ul.submenu ul.submenu>li a>[class*="fa-"]:first-child{left:30px;}
+        /*----------------导航hack--------------------*/
+    </style>
+    <script src="__CONTROLLER_VIEW__/statics/js/jquery.js"></script>
+
+
+
+
+
+</head>
+
+<body style="min-width:900px;" screen_capture_injected="true">
+<div id="loading"><i class="loadingicon"></i><span>正在加载...</span></div>
+<div id="right_tools_wrapper">
+    <span id="refresh_wrapper" title="刷新当前页" ><i class="fa fa-refresh right_tool_icon"></i></span>
+</div>
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a href="{|U:'Index/index'}" class="brand">
+                <small>
+                    <img src="__CONTROLLER_VIEW__/statics/images/icon/logo-18.png">
+                    职工公寓管理
+                </small>
+            </a>
+            <div class="pull-left nav_shortcuts" >
+                <a class="btn btn-small btn-info" href="javascript:;"
+                   onclick="openapp('{|U:'College/index'}', 'College','大学生');">
+                    大学生
+                </a>
+                <a class="btn btn-small btn-success" href="javascript:;"
+                   onclick="openapp('{|U:'Worker/index'}', 'Worker','职工');">
+                    职工
+                </a>
+                <a class="btn btn-small btn-warning" href="javascript:;}"
+                        onclick="openapp('{|U:'Dispatch/index'}', 'DispatchList','派遣工');">
+                    派遣工
+                </a>
+                <a class="btn btn-small btn-danger" href="javascript:;"
+                   onclick="openapp('{|U:'Rent/index'}', 'RentList','租赁住户');">
+                    租赁
+                </a>
+            </div>
+            <div id="search" >
+                <div class="form-inline input-group center" >
+                    <input type="text" id="globalSearchInput" class="form-control" placeholder="在 所有人 中搜索...">
+                    <input class="btn btn-default" id="globalSearch" type="button" value="搜索">
+                </div>
+                <script>
+                    $('#globalSearch').click(function(){
+                        var sKeyword = $('#globalSearchInput').val();
+                        if (!sKeyword) {
+                            return false;
+                        }
+                        $("#task-content-inner li[app-id='globalSearch']").remove();
+                        openapp("{|U:'Index/search', array('keyword'=>'"+ sKeyword +"')}", 'globalSearch', '全局搜索');
+                    })
+                </script>
+            </div>
+            <ul class="nav simplewind-nav pull-right">
+                <li class="light-blue">
+                    <a data-toggle="dropdown" href="javascript:;" class="dropdown-toggle">
+                        <img class="nav-user-photo" src="__CONTROLLER_VIEW__/statics/images/icon/logo-18.png" alt="demo">
+                            <span class="user-info">
+                                <small>欢迎,</small>
+                                {$hd.session.username}
+                            </span>
+                        <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer">
+                        <!-- <li><a href="javascript:;" onclick="openapp('/admin/setting/site.html','index_site','站点管理');"><i class="fa fa-cog"></i> 站点管理</a></li>
+                        <li><a href="javascript:;" onclick="openapp('/admin/user/userinfo.html','index_userinfo','个人资料');"><i class="fa fa-user"></i> 个人资料</a></li>
+                        <li class="divider"></li> -->
+                        <li><a href="{|U:'Login/logout'}"><i class="fa fa-sign-out"></i> 退出</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="main-container container-fluid">
+
+<div class="sidebar" id="sidebar" style="width:144px;">
+
+<div id="nav_wraper" style="width:144px;">
+
+
+    <!-- 图标 http://www.bootcss.com/p/font-awesome/-->
+    <!-- 图标 http://www.bootcss.com/p/font-awesome/-->
+    <!-- 图标 http://www.bootcss.com/p/font-awesome/-->
+    <!-- 图标 http://www.bootcss.com/p/font-awesome/-->
+    <!-- 图标 http://www.bootcss.com/p/font-awesome/-->
+    <!-- 图标 http://www.bootcss.com/p/font-awesome/-->
+    <!-- 图标 http://www.bootcss.com/p/font-awesome/-->
+    <!-- 图标 http://www.bootcss.com/p/font-awesome/-->
+    <!-- 图标 http://www.bootcss.com/p/font-awesome/-->
+    <!-- 图标 http://www.bootcss.com/p/font-awesome/-->
+    <!-- 图标 http://www.bootcss.com/p/font-awesome/-->
+    <!-- 图标 http://www.bootcss.com/p/font-awesome/-->
+    <!-- 图标 http://www.bootcss.com/p/font-awesome/-->
+    <!-- 图标 http://www.bootcss.com/p/font-awesome/-->
+    <!-- 图标 http://www.bootcss.com/p/font-awesome/-->
+    <!-- 图标 http://www.bootcss.com/p/font-awesome/-->
+    <!-- 图标 http://www.bootcss.com/p/font-awesome/-->
+    <!-- 图标 http://www.bootcss.com/p/font-awesome/-->
+    <!-- 图标 http://www.bootcss.com/p/font-awesome/-->
+    <!-- 图标 http://www.bootcss.com/p/font-awesome/-->
+    <!-- 图标 http://www.bootcss.com/p/font-awesome/-->
+    <!-- 图标 http://www.bootcss.com/p/font-awesome/-->
+    <!-- 图标 http://www.bootcss.com/p/font-awesome/-->
+
+
+
+
+
+
+
+
+
+
+
+<ul class="nav nav-list">
+<li >
+    <a href="javascript:;" class="dropdown-toggle">
+        <i class="fa fa-group normal"></i>
+        <span class="menu-text normal">用户管理</span>
+        <b class="arrow fa fa-angle-right normal"></b>
+        <i class="fa fa-reply back"></i>
+        <span class="menu-text back">返回</span>
+    </a>
+    <ul  class="submenu">
+        <li>
+            <a href="javascript:;" class="dropdown-toggle">
+                <i class="fa fa-caret-right"></i>
+                <span class="menu-text">人员信息</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+            <ul  class="submenu">
+                <li>
+                    <a href="javascript:;" onclick="openapp('{|U:"College/index"}','College','大学生');">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                    <span class="menu-text">大学生</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" onclick="openapp('{|U:"Worker/index"}','Worker','职工');">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                    <span class="menu-text">职工</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" onclick="openapp('{|U:"Dispatch/index"}','DispatchList','派遣工');">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                    <span class="menu-text">派遣工</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" onclick="openapp('{|U:"Rent/index"}','RentList','租赁住户');">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                    <span class="menu-text">租赁住户</span>
+                    </a>
+
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:;" class="dropdown-toggle">
+                <i class="fa fa-caret-right"></i>
+                <span class="menu-text">退房记录</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+            <ul  class="submenu">
+                <li>
+                    <a href="javascript:;" onclick="openapp('{|U:"College/quitInfo"}','CollegeQuit','大学生退房');">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                    <span class="menu-text">大学生</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="javascript:;" onclick="openapp('{|U:"Worker/quitInfo"}','WorkerQuit','职工退房');">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                    <span class="menu-text">职工</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" onclick="openapp('{|U:"Dispatch/quitInfo"}','DispatchQuit','派遣工退房');">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                    <span class="menu-text">派遣工</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" onclick="openapp('{|U:"Rent/quitInfo"}','rentQuit','租赁退租');">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                    <span class="menu-text">租赁退租</span>
+                    </a>
+
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:;" class="dropdown-toggle">
+                <i class="fa fa-caret-right"></i>
+                <span class="menu-text">调房记录</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+            <ul  class="submenu">
+                <li>
+                    <a href="javascript:;" onclick="openapp('{|U:"College/moveInfo"}','CollegeMove','大学生调房');">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                    <span class="menu-text">大学生</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" onclick="openapp('{|U:"Worker/moveInfo"}','WorkerMove','职工调房');">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                    <span class="menu-text">职工</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" onclick="openapp('{|U:"Dispatch/moveInfo"}','DispatchMove','派遣工调房');">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                    <span class="menu-text">派遣工</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:;" onclick="openapp('{|U:"Rent/renewInfo"}','renewInfo','续签记录');">
+                <i class="fa fa-caret-right"></i>
+                <span class="menu-text">租赁续签记录</span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;" class="dropdown-toggle">
+                <i class="fa fa-caret-right"></i>
+                <span class="menu-text">人数统计</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+            <ul  class="submenu">
+                <li>
+                    <a href="javascript:;" onclick="openapp('{|U:"Count/college"}','collegeCount','大学生人数');">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                    <span class="menu-text">大学生</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="javascript:;" onclick="openapp('{|U:"Count/worker"}','workerCount','职工人数');">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                    <span class="menu-text">职工</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" onclick="openapp('{|U:"Count/dispatch"}','dispatchCount','派遣工人数');">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                    <span class="menu-text">派遣工</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" onclick="openapp('{|U:"Count/rent"}','rentCount','租赁人数');">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                    <span class="menu-text">租赁住户</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</li>
+
+
+<li>
+    <a href="javascript:;" class="dropdown-toggle">
+        <i class="fa fa-th normal"></i>
+        <span class="menu-text normal">费用管理</span>
+        <b class="arrow fa fa-angle-right normal"></b>
+        <i class="fa fa-reply back"></i>
+        <span class="menu-text back">返回</span>
+    </a>
+
+    <ul  class="submenu">
+        <li>
+            <a href="javascript:;" onclick="openapp('{|U:"RentCharge/index"}','rentIndex','租赁费用');">
+            <i class="fa fa-caret-right"></i>
+            <span class="menu-text">租赁费用</span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;" onclick="openapp('{|U:"RentCharge/quitChargeindex"}','quitChargeindex','租赁退租费用');">
+            <i class="fa fa-caret-right"></i>
+            <span class="menu-text">租赁退租费用</span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;" onclick="openapp('{|U:"SingleRentCharge/index"}','workerRentIndex','单身床位费');">
+            <i class="fa fa-caret-right"></i>
+            <span class="menu-text">单身床位费</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="javascript:;" class="dropdown-toggle">
+                <i class="fa fa-caret-right"></i>
+                <span class="menu-text">单身水电费</span>
+                <b class="arrow fa fa-angle-right"></b>
+            </a>
+            <ul  class="submenu">
+                <li>
+                    <a href="javascript:;" onclick="openapp('{|U:"SDCharge/index"}','SDChargeIndex','单身水电费');">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                    <span class="menu-text">水电费</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:;" onclick="openapp('{|U:"SDBase/index"}','SDBaseIndex','水电表底数');">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+                    <span class="menu-text">水电表底数</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</li>
+    <li>
+        <a href="javascript:;" class="dropdown-toggle">
+            <i class="fa fa-exchange normal"></i>
+            <span class="menu-text normal">生成报表</span>
+            <b class="arrow fa fa-angle-right normal"></b>
+            <i class="fa fa-reply back"></i>
+            <span class="menu-text back">返回</span>
+        </a>
+        <ul  class="submenu">
+            <li>
+                <a href="javascript:;" onclick="openapp('{|U:"Export/index"}','exportIndex','导出人员信息');">
+                <i class="fa fa-caret-right"></i>
+                <span class="menu-text">人员信息</span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" onclick="openapp('{|U:"Export/chargeIndex"}','exportChargeIndex','导出费用报表');">
+                <i class="fa fa-caret-right"></i>
+                <span class="menu-text">费用报表</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+ <li>
+    <a href="javascript:;" class="dropdown-toggle">
+        <i class="fa fa-wrench normal"></i>
+        <span class="menu-text normal">维修管理</span>
+        <b class="arrow fa fa-angle-right normal"></b>
+        <i class="fa fa-reply back"></i>
+        <span class="menu-text back">返回</span>
+
+
+    </a>
+
+    <ul  class="submenu">
+        <li>
+            <a href="javascript:;" onclick="openapp('{|U:"Repair/add"}','repairAdd','添加项目');">
+            <i class="fa fa-caret-right"></i>
+            <span class="menu-text">添加项目</span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;" onclick="openapp('{|U:"Repair/underReview"}','repairUnderReview','待审核');">
+            <i class="fa fa-caret-right"></i>
+            <span class="menu-text">待审核</span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;" onclick="openapp('{|U:"Repair/underFinish"}','repairUnderFinish','待完工');">
+            <i class="fa fa-caret-right"></i>
+            <span class="menu-text">待完工</span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;" onclick="openapp('{|U:"Repair/finished"}','repairFinished','已完工');">
+            <i class="fa fa-caret-right"></i>
+            <span class="menu-text">已完工</span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;" onclick="openapp('{|U:"Repair/index"}','repairIndex','所有项目');">
+            <i class="fa fa-caret-right"></i>
+            <span class="menu-text">所有项目</span>
+            </a>
+        </li>
+
+    </ul>
+</li>
+<!-- <li>
+    <a href="javascript:;" class="dropdown-toggle">
+        <i class="fa fa-th normal"></i>
+        <span class="menu-text normal">仓库管理</span>
+        <b class="arrow fa fa-angle-right normal"></b>
+        <i class="fa fa-reply back"></i>
+        <span class="menu-text back">返回</span>
+    </a>
+
+    <ul  class="submenu">
+        <li>
+            <a href="javascript:;" onclick="openapp('{|U:"Storage/index"}','storageIndex','仓库管理');">
+            <i class="fa fa-caret-right"></i>
+            <span class="menu-text">仓库管理</span>
+            </a>
+        </li>
+    </ul>
+</li> -->
+    <!-- <li>
+        <a href="javascript:;" class="dropdown-toggle">
+            <i class="fa fa-folder-open normal"></i>
+            <span class="menu-text normal">文件系统</span>
+            <b class="arrow fa fa-angle-right normal"></b>
+            <i class="fa fa-reply back"></i>
+            <span class="menu-text back">返回</span>
+        </a>
+
+        <ul  class="submenu">
+            <li>
+                <a href="javascript:;" onclick="openapp('{|U:"Export/index"}','exportIndex','导出人员信息');">
+                <i class="fa fa-caret-right"></i>
+                <span class="menu-text">人员信息</span>
+                </a>
+            </li>
+        </ul>
+    </li> -->
+<li>
+    <a href="javascript:;" class="dropdown-toggle">
+        <i class="fa fa-cogs normal"></i>
+        <span class="menu-text normal">设置</span>
+        <b class="arrow fa fa-angle-right normal"></b>
+        <i class="fa fa-reply back"></i>
+        <span class="menu-text back">返回</span>
+
+    </a>
+
+    <ul  class="submenu">
+        <li>
+            <a href="javascript:;" onclick="openapp('{|U:"Setting/editPassword"}','editPassword','修改密码');">
+                <i class="fa fa-caret-right"></i>
+                <span class="menu-text">修改密码</span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;" onclick="openapp('{|U:"User/index"}','user','用户管理');">
+            <i class="fa fa-caret-right"></i>
+            <span class="menu-text">用户管理</span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;" onclick="openapp('{|U:"Role/index"}','role','角色管理');">
+            <i class="fa fa-caret-right"></i>
+            <span class="menu-text">角色管理</span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;" onclick="openapp('{|U:"Backup/set"}','backupSet','数据备份');">
+            <i class="fa fa-caret-right"></i>
+            <span class="menu-text">数据备份</span>
+            </a>
+        </li>
+        <li>
+            <a href="javascript:;" onclick="openapp('{|U:"Backup/index"}','recovery','数据还原');">
+            <i class="fa fa-caret-right"></i>
+            <span class="menu-text">数据还原</span>
+            </a>
+        </li>
+    </ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="main-content" style="margin-left:145px;">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <a id="task-pre" class="task-changebt">←</a>
+        <div id="task-content">
+            <ul class="macro-component-tab" id="task-content-inner">
+                <li class="macro-component-tabitem noclose" app-id="0" app-url="{|U:'Index/welcome'}" app-name="首页">
+                    <span class="macro-tabs-item-text">首页</span>
+                </li>
+            </ul>
+            <div style="clear:both;"></div>
+        </div>
+        <a id="task-next" class="task-changebt">→</a>
+    </div>
+
+    <div class="page-content" id="content">
+        <iframe src="{|U:'Index/map'}" style="width:100%;height: 100%;" frameborder="0" id="appiframe-0" class="appiframe"></iframe>
+    </div>
+</div>
+</div>
+
+<script src="__CONTROLLER_VIEW__/statics/simpleboot/bootstrap/js/bootstrap.min.js"></script>
+<script>
+    var b = $("#sidebar").hasClass("menu-min");
+    var a = "ontouchend" in document;
+    $(".nav-list").on(
+            "click",
+            function(g) {
+                var f = $(g.target).closest("a");
+                if (!f || f.length == 0) {
+                    return
+                }
+                if (!f.hasClass("dropdown-toggle")) {
+                    if (b && "click" == "tap"
+                            && f.get(0).parentNode.parentNode == this) {
+                        var h = f.find(".menu-text").get(0);
+                        if (g.target != h && !$.contains(h, g.target)) {
+                            return false
+                        }
+                    }
+                    return
+                }
+                var d = f.next().get(0);
+                if (!$(d).is(":visible")) {
+                    var c = $(d.parentNode).closest("ul");
+                    if (b && c.hasClass("nav-list")) {
+                        return
+                    }
+                    c.find("> .open > .submenu").each(
+                            function() {
+                                if (this != d
+                                        && !$(this.parentNode).hasClass(
+                                                "active")) {
+                                    $(this).slideUp(150).parent().removeClass(
+                                            "open")
+                                }
+                            })
+                } else {
+                }
+                if (b && $(d.parentNode.parentNode).hasClass("nav-list")) {
+                    return false;
+                }
+                $(d).slideToggle(150).parent().toggleClass("open");
+                return false;
+            });
+</script>
+<script src="__CONTROLLER_VIEW__/statics/js/index.js"></script>
+</body>
+</html>

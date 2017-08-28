@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title>待完工项目</title>
+  <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+  <link rel="stylesheet" href="__PUBLIC__/css/hdjs.css">
+  <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.0.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/hdjs.min.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/jquery.print.min.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="__CONTROLLER_VIEW__/js/underFinish.js"></script>
+</head>
+<body>
+<div class="container" style="margin-top: 20px;">
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        待完工项目
+      </div>
+      <table class="table" id="table" print-url="{|U:'printed'}">
+        <tr>
+          <th>报修人</th>
+          <th>位置/房间</th>
+          <th>报修内容</th>
+          <th>报修时间</th>
+          <th>审核人</th>
+          <th>审核时间</th>
+          <th>审核意见</th>
+          <th>第一次打印时间</th>
+          <th class="no-print">操作</th>
+        </tr>
+        <foreach from="$underFinishes" key="$k" value="$underFinish">
+          <tr id="print-{$underFinish.id}" class="no-print">
+            <td>{$underFinish.name}</td>
+            <td>{$underFinish.location}</td>
+            <td>{$underFinish.content}</td>
+            <td>{$underFinish.created_at}</td>
+            <td>{$underFinish.reviewer}</td>
+            <td>{$underFinish.reviewed_at}</td>
+            <td>{$underFinish.review_remark}</td>
+            <td>{$underFinish.printed_at}</td>
+            <td class="no-print">
+              <a href="{|U:'finish', array('id'=>$underFinish['id'])}"
+                 class="btn btn-success btn-xs" >完工</a>
+              <button  id="{$underFinish.id}"
+                 class="btn btn-success btn-xs print-button" >打印</button>
+
+
+            </td>
+          </tr>
+        </foreach>
+      </table>
+      <div class="panel-footer">
+        <button id="finishForAll" class="btn btn-success" url="{|U:'finishForAll'}">全部完工</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="_mask" style="display:none;opacity: 0.3; position: absolute; background: none repeat scroll 0% 0% rgb(255, 255, 255); z-index: 80; top: 0px; left: 0px;bottom:0;right:0;">
+  <img src="__PUBLIC__/img/loading_64.gif" style="display: block;width:64px;height: 62px;margin:200px auto"/>
+</div>
+</body>
+</html>

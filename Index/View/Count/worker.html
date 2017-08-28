@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/hdjs.css">
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap-datetimepicker.min.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap-datetimepicker.min.js"></script>
+    <style>
+        table, table tr, table td, table th{
+            text-align: center;
+        }
+        .mr10{
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        $(function(){
+            var iTotalEmptyNumber = 0;
+            $('.emptyNumber').each(function(){
+                var iCurrentNumber = parseInt($(this).html());
+                iTotalEmptyNumber += iCurrentNumber;
+            })
+            $('#totalEmptyNumber').html(iTotalEmptyNumber)
+        })
+    </script>
+</head>
+<body>
+<ul class="nav nav-tabs mr10" >
+    <li><a href="#general" data-toggle="tab">概况</a></li>
+    <foreach from="$room" key="$building" value="$allUnits">
+        <li><a href="#_{$building}" data-toggle="tab"> {$building}#楼 </a></li>
+    </foreach>
+</ul>
+<div class="tab-content">
+    <div class="tab-pane" id="general">
+        <table class="table mr10">
+            <tr>
+                <th></th>
+                <th width="80">楼号</th>
+                <th width="80">合计</th>
+                <th></th>
+            </tr>
+            <?php $total = array();?>
+            <foreach from="$room" key="$building" value="$allUnits">
+                <tr>
+                    <td></td>
+                    <th>{$building}</th>
+                    <th><?php $total[$building]=array_sum($allUnits[1]);echo $total[$building]?></th>
+                    <td></td>
+                </tr>
+            </foreach>
+            <tr>
+                <td colspan="4">总计 <?php echo array_sum($total);?> 人 </td>
+            </tr>
+        </table>
+        <div class="notice bg-success">共有 <span id="totalEmptyNumber"></span> 个空房间</div>
+    </div>
+    <foreach from="$room" key="$building" value="$allUnits">
+        <?php $empty = 0;?>
+        <div class="tab-pane" id="_{$building}">
+            <table class="table table-bordered mr10">
+                <tr>
+                    <th></th>
+                    <th colspan="<?php echo count($allUnits)*4;?>">{$building}<sup>#</sup>楼人员数量统计表</th>
+                    <th></th>
+                </tr>
+                <!-- 楼层，共20层 -->
+                <?php for ($i = 20; $i >= 1; $i--) {if($building=='高1'&&($i==19||$i==18||$i==20||$i==1||$i==2))continue;if($i==13)continue;if($building=='高2'&&($i==18))continue;?>
+                <tr>
+                    <td></td>
+                    <?php $unitNum = count($allUnits);for($j=1;$j<=$unitNum;$j++){$roomPre=$building.'-';?>
+                    <td width="120"><a class="search" room="<?php $room1=$roomPre.$i.'01';echo $room1;?>" href="javascript:;"><?php echo $i.'01';?></a>：&nbsp;&nbsp;&nbsp;<!--</td>-->
+                        <!--<td width="50">--><?php if($allUnits[$j][$i.'01']==0){$empty++;echo'&nbsp;&nbsp;';}else{echo $allUnits[$j][$i.'01'];}?></td>
+                    <td width="120"><a class="search" room="<?php $room2=$roomPre.$i.'02';echo $room2;?>" href="javascript:;"><?php echo $i.'02';?></a>：&nbsp;&nbsp;&nbsp;<!--</td>-->
+                        <!--<td width="50">--><?php if($allUnits[$j][$i.'02']==0){$empty++;echo'&nbsp;&nbsp;';}else{echo $allUnits[$j][$i.'02'];}?></td>
+                    <td width="120"><a class="search" room="<?php $room3=$roomPre.$i.'03';echo $room3;?>" href="javascript:;"><?php echo $i.'03';?></a>：&nbsp;&nbsp;&nbsp;<!--</td>-->
+                        <!--<td width="50">--><?php if($allUnits[$j][$i.'03']==0){$empty++;echo'&nbsp;&nbsp;';}else{echo $allUnits[$j][$i.'03'];}?></td>
+                    <td width="120"><a class="search" room="<?php $room4=$roomPre.$i.'04';echo $room4;?>" href="javascript:;"><?php echo $i.'04';?></a>：&nbsp;&nbsp;&nbsp;<!--</td>-->
+                        <!--<td width="50">--><?php if($allUnits[$j][$i.'04']==0){$empty++;echo'&nbsp;&nbsp;';}else{echo $allUnits[$j][$i.'04'];}?></td>
+                    <?php }?>
+                    <td></td>
+                </tr>
+                <?php };?>
+            </table>
+            <div class="notice bg-success">共有 <span class="emptyNumber">{$empty}</span> 个空房间</div>
+        </div>
+
+    </foreach>
+</div>
+<script>
+    $('.search').click(function(){
+        var room = $(this).attr('room');
+        parent.window.openapp('{|U:"Worker/search",array("keyword"=>"'+room+'")}','Worker','职工');
+    })
+</script>
+<script>
+    $('.nav-tabs').find('li').eq(0).addClass('active');
+    $('.tab-pane').eq(0).addClass('active');
+    $('a').focus(function(){
+        $(this).blur();
+    })
+</script>
+
+<!--<div class="notice bg-danger">
+    全部共 {$count} 条缴费记录，费用总计 {$sum} 元<br />
+    <span style="font-size: 12px;">（当前只显示最新的 50 条缴费信息。若要查看更多，请设定查询条件。）</span>
+</div>-->
+
+</body>
+</html>

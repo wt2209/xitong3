@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/hdjs.css">
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap-datetimepicker.min.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/hdjs.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+    <script type="text/javascript" src="__CONTROLLER_VIEW__/js/index.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap-datetimepicker.min.js"></script>
+
+</head>
+<body>
+<div class="panel panel-info">
+    <div class="panel-heading">
+        单身住户水电表底数
+    </div>
+    <div class="panel-body">
+
+        <form id="singleSDCharge" action="{|U:'search'}" method="post">
+            <div class="form-group"  style="width:830px;" >
+                <div class="col-xs-1 hd-w120" style="padding:0 2px">
+                    <input type="text" readonly class="form-control" name="startTime" id="singleSDStartTime" placeholder="抄表开始时间">
+                    <script type="text/javascript">
+                        $('#singleSDStartTime').datetimepicker({
+                            language:'cn',
+                            format: 'yyyy-mm-dd',
+                            todayBtn:true,
+                            autoclose:true,
+                            minView:2,
+                            viewSelect:'month'
+                        });
+                    </script>
+                </div>
+                <div class="col-xs-2  hd-w120" style="padding:0 2px">
+                    <input type="text" readonly class="form-control" name="endTime" id="singleSDEndTime" placeholder="抄表截止时间">
+                    <script type="text/javascript">
+                        $('#singleSDEndTime').datetimepicker({
+                            language:'cn',
+                            format: 'yyyy-mm-dd',
+                            todayBtn:true,
+                            autoclose:true,
+                            minView:2,
+                            viewSelect:'month'
+                        });
+                    </script>
+                </div>
+                <div class="col-xs-1  hd-w120" style="padding:0 2px">
+                    <select name="year" class="form-control">
+                        <option value="0">年度(全部)</option>
+                        <foreach from="$year" key="$k" value="$v">
+                            <option value="{$v}">{$v}</option>
+                        </foreach>
+                    </select>
+                </div>
+                <div class="col-xs-1  hd-w120" style="padding:0 2px">
+                    <select name="month" class="form-control">
+                        <option value="0">月度(全部)</option>
+                        <foreach from="$month" key="$k" value="$v">
+                            <option value="{$v}">{$v}</option>
+                        </foreach>
+                    </select>
+                </div>
+                <div class="col-xs-4" style="padding:0 2px">
+                    <input type="text" class="form-control searchInput" value="" name="keyword"
+                           placeholder="房间号，如 高1-501 或 1-501">
+                </div>
+            </div>
+            <input type="submit" class="btn btn-default" value="搜索"/>
+        </form>
+    </div>
+    <div class="panel-footer">
+        <a href="{|U:'import'}" class="btn btn-primary">从文件导入</a>
+        <a href="{|U:'add'}" class="btn btn-primary">批量添加</a>
+        <a href="javascript:;" id="batchDel" class="btn btn-danger">批量删除</a>
+    </div>
+</div>
+<div class="content checkbox" style="position:fixed;bottom:0;top:180px;left:0;right:0;overflow:auto">
+    <div class="bg-danger" style="text-align: center;padding:10px;">
+        <span style="font-size: 16px;">（当前只显示最新的 20 条记录。若要查看更多，请设定查询条件。）</span>
+    </div>
+    <table class="table table-condensed">
+        <tr>
+            <th width="30">
+                &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" class="selectAll"/>
+            </th>
+            <th>房间号</th>
+            <th>年度</th>
+            <th>月度</th>
+            <th>水表底数</th>
+            <th>电表底数</th>
+            <th>抄表人</th>
+            <th>抄表时间</th>
+            <th>备注</th>
+            <th>操作</th>
+        </tr>
+        <list from="$data" name="$d">
+        <tr class="onChecked">
+            <td>
+                &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="{$d.id}"/>
+            </td>
+            <td>{$d.room}</td>
+            <td>{$d.year}</td>
+            <td>{$d.month}</td>
+            <td>{$d.water_base}</td>
+            <td>{$d.electric_base}</td>
+            <td>{$d.name}</td>
+            <td>{$d.read_time|hd_date}</td>
+            <td>{$d.remark}</td>
+            <td>
+                <input type="button" class="btn btn-success btn-xs" value="修改"/>
+            </td>
+        </tr>
+        </list>
+    </table>
+</div>
+<!--占位-->
+<div style="height:200px;"></div>
+
+<!-- 删除确认 模态框 -->
+<div id="delModal" class="modal fade">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">删除确认</h4>
+            </div>
+            <div class="modal-body">
+                <p>确认要删除吗？</p>
+                <p>（最多只允许一次性删除10条记录。）</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+                <a href="javascript:;" id="delConfirm" type="button" class="btn btn-primary">
+                    确 定
+                </a>
+                <script type="text/javascript">
+                    $('#delConfirm').click(function(){
+                        $('#delModal').modal('hide')
+                        var aTmp = [];
+                        $('.onChecked').find('input:checked').each(function(){
+                            var iCur = parseInt($(this).val());
+                            if (iCur) {
+                                aTmp.push(iCur);
+                            }
+                        });
+                        var sId = aTmp.join(',');
+                        hd_ajax("{|U:'del'}", 'allId=' + sId, function(){
+                            location.reload()
+                            return false;
+                        });
+                    })
+                </script>
+            </div>
+        </div><!-- /.Modal-content -->
+    </div><!-- /.Modal-dialog -->
+</div>
+</body>
+</html>

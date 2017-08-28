@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/hdjs.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/search.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/hdjs.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__CONTROLLER_VIEW__/js/add.js"></script>
+
+</head>
+<body>
+<div class="panel panel-success">
+    <div class="panel-heading form-inline">
+        <a href="{|U:'index'}" class="btn btn-warning btn-sm">返回底数列表</a>&nbsp;&nbsp;&nbsp;
+        批量添加
+    </div>
+    <div class="panel-body">
+        <div class="bg-danger" style="padding:10px;">
+            <p>说明：</p>
+            <p>1.年度和月度必须填写</p>
+            <p>2.约定：2015-4-28日或2015-5-1日抄的表，则年月度应该为2015-4</p>
+            <p>3.将自动过滤掉房间号错误、重复，或者水表数和电表数都为空的项</p>
+            <p>4.若指定了总的抄表人和抄表时间，则各分项中可不用填写</p>
+            <p>5.抄表时间格式最好为：2015-5-12 。若输入的格式错误，将使用当前时间 </p>
+        </div>
+    </div>
+    <div class="panel-footer form-inline">
+        <input type="text" class="form-control" style="width: 60px;" id="year" name="year" placeholder="年度"/>
+        <input type="text" class="form-control" style="width: 60px;" id="month" name="month" placeholder="月度"/>
+        <input type="text" class="form-control" style="width: 100px;" id="total_name" name="total_name" placeholder="总抄表人"/>
+        <input type="text" class="form-control" style="width: 100px;" id="total_read_time" name="total_read_time" placeholder="总抄表时间"/>
+        <span style="margin-left: 100px;">另外添加</span>
+        <input type="text" class="form-control" id="rowNumber" style="width:50px; " value="10"/>行
+        <a href="javascript:;" class="btn btn-info" id="addRows" style="">添加</a>
+        <input type="button" class="btn btn-success" id="addSDBaseSubmit" style="margin-left: 50px;" value="提交"/>
+    </div>
+</div>
+<div class="content checkbox" style="position:fixed;bottom:0;top:328px;left:0;right:0;overflow:auto">
+    <form id="addSDBase" _url="{|U:'add'}">
+        <table class="table">
+            <tr>
+                <th width="120">房间号</th>
+                <th width="120">电表底数</th>
+                <th width="120">水表底数</th>
+                <th width="120">抄表人</th>
+                <th width="120">抄表时间</th>
+                <th width="400">备注</th>
+                <th></th>
+            </tr>
+            <tr id="trBase" _num="1">
+                <td>
+                    <input type="text" class="form-control" name="1[room]" placeholder="房间号"/>
+                </td>
+                <td>
+                    <input type="text" class="form-control"  name="1[electric_base]" placeholder="电表底数"/>
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="1[water_base]" placeholder="水表底数"/>
+                </td>
+                <td>
+                    <input type="text" class="form-control"  name="1[name]" placeholder="抄表人"/>
+                </td>
+                <td>
+                   <input type="text" class="form-control" name="1[read_time]" placeholder="抄表时间"/>
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="1[remark]" placeholder="备注"/>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div id="_mask" style="display:none;opacity: 0.3; position: absolute; background: none repeat scroll 0% 0% rgb(255, 255, 255); z-index: 80; top: 0px; left: 0px;bottom:0;right:0;">
+    <img src="__PUBLIC__/img/loading_64.gif" style="display: block;width:64px;height: 62px;margin:200px auto"/>
+</div>
+</body>
+</html>

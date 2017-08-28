@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>修改维修项目</title>
+  <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+  <link rel="stylesheet" href="__PUBLIC__/css/hdjs.css">
+  <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.0.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/hdjs.min.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="__CONTROLLER_VIEW__/js/edit.js"></script>
+</head>
+<body>
+<div class="container" style="margin-top:20px;">
+  <div class="row">
+    <form id="form" url="{|U:'store'}" callback-url="{|U:'underReview'}">
+      <input type="reset" id="reset" style=" display: none">
+      <input type="hidden" name="id" value="{$repairItem.id}">
+      <div class="panel panel-success">
+        <div class="panel-heading">
+          修改维修项目
+        </div>
+        <div class="panel-body">
+
+          <div class="form-group">
+            <label for="name">报修人</label>
+            <input type="text" class="form-control" name="name" id="name" value="{$repairItem.name}" >
+          </div>
+          <br>
+          <div class="form-group">
+            <label for="location">位置/房间</label> <span style="font-size: 12px;">(必填)</span>
+            <input type="text" class="form-control" id="location" name="location"
+                   value="{$repairItem.location}">
+          </div>
+          <br>
+          <div class="form-group">
+            <label for="content">报修内容</label> <span style="font-size: 12px;">(必填)</span>
+            <textarea name="content" class="form-control" id="content"
+                      rows="5" style="margin:0;padding:6px 12px;">{$repairItem.content}</textarea>
+          </div>
+          <br>
+          <div class="form-group">
+            <label for="date">时间</label> <span style="font-size: 12px;">(若留空，则以当前时间为准)</span>
+            <input type="text" class="form-control" id="date" placeholder="格式：2017-8-11"
+                   name="created_at" value="{$repairItem.created_at}">
+          </div>
+        </div>
+        <div class="panel-footer">
+          <button type="submit" id="submit" class="btn btn-success">提 交</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div id="_mask" style="display:none;opacity: 0.3; position: absolute; background: none repeat scroll 0% 0% rgb(255, 255, 255); z-index: 80; top: 0px; left: 0px;bottom:0;right:0;">
+  <img src="__PUBLIC__/img/loading_64.gif" style="display: block;width:64px;height: 62px;margin:200px auto"/>
+</div>
+</body>
+</html>

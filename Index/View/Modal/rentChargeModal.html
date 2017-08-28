@@ -1,0 +1,109 @@
+缴费 模态框 -->
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">缴费</h4>
+        </div>
+        <div class="modal-body">
+            <form id="rentChargeForm" class="form-horizontal">
+                <!-- 个人信息 -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">个人信息</label>
+                    <div class="col-sm-10">
+                        <p class="control-label person-name" style="text-align:left;">
+                            <input type="hidden" name="rent_id" value="{$person.id}"/>
+                            <strong>姓名：</strong>{$person.name}&nbsp;&nbsp;&nbsp;&nbsp;
+                            <strong>租赁合同：</strong>{$person.rent_s|hd_date}—{$person.rent_e|hd_date}
+                        </p>
+                    </div>
+                </div>
+                <!-- 说明 -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-10 chargeQuarter">
+                        <p class="control-label person-name" style="text-align:left;color:red;">
+                            注：没有的费用项请留空。使用Tab(Shift+Tab)键可快速切换选框。
+                        </p>
+                    </div>
+                </div>
+
+                <foreach from="$allTypes" key="$k" value="$v">
+                    <if value="$v.needQuarter">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{$v.title}</label>
+                            <div class="col-sm-2 chargeQuarter">
+                                <input class="form-control" name="_{$k}[quarter]" type="text" placeholder="季度">
+                            </div>
+                            <div class="col-sm-2 chargeMoney">
+                                <input class="form-control" name="_{$k}[money]" type="text" placeholder="金额">
+                            </div>
+                            <div class="col-sm-6 chargeRemark">
+                                <input class="form-control" name="_{$k}[remark]" type="text"  placeholder="费用说明">
+                            </div>
+                        </div>
+                    <elseif value="$v.title == '押金'"/>
+                        <if value="!$isPledgeCharged">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">{$v.title}</label>
+                                <div class="col-sm-4 chargeMoney">
+                                    <input class="form-control" name="_{$k}[money]" type="text" placeholder="金额">
+                                </div>
+                                <div class="col-sm-6 chargeRemark">
+                                    <input class="form-control" name="_{$k}[remark]" type="text"  placeholder="费用说明">
+                                </div>
+                            </div>
+                        </if>
+                    <else/>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{$v.title}</label>
+                            <div class="col-sm-4 chargeMoney">
+                                <input class="form-control" name="_{$k}[money]" type="text" placeholder="金额">
+                            </div>
+                            <div class="col-sm-6 chargeRemark">
+                                <input class="form-control" name="_{$k}[remark]" type="text"  placeholder="费用说明">
+                            </div>
+                        </div>
+                    </if>
+                </foreach>
+
+                <!-- 缴费时间 -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label rentChargeTimePosition">缴费时间</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" name="charge_time" readonly
+                               id="rentChargeTime" type="text" placeholder="不填则以当前时间为准">
+                        <script type="text/javascript">
+                            $('#rentChargeTime').datetimepicker({
+                                language:'cn',
+                                format: 'yyyy-mm-dd',
+                                todayBtn:true,
+                                autoclose:true,
+                                minView:2,
+                                viewSelect:'month',
+                                container:'.rentChargeTimePosition'
+                            });
+                        </script>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+            <a href="javascript:;" type="button" id="rentChargeConfirm" class="btn btn-primary">确 定</a>
+            <script type="text/javascript">
+                $('#rentChargeConfirm').click(function(){
+                    //清空原数据
+                    $(this).find('input').val('');
+                    $(this).find('textarea').html('');
+                    $('#MyModal').modal('hide')
+                    hd_ajax("{|U:'RentCharge/rentCharge'}", $('#rentChargeForm').serialize(), function(){
+                        // location.reload(true) 会强制刷新页面，导致滚动条归零（firefox）
+                        return false;
+                    });
+                })
+            </script>
+        </div>
+    </div>
+</div>
+<!-- 缴费 结束 模态框

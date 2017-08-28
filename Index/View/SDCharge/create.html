@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/hdjs.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/search.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/hdjs.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__CONTROLLER_VIEW__/js/create.js"></script>
+
+</head>
+<body>
+<div class="panel panel-success">
+    <div class="panel-heading form-inline">
+        <a href="{|U:'index'}" class="btn btn-warning btn-sm">返回水电费列表</a>&nbsp;&nbsp;&nbsp;
+        生成水电费
+    </div>
+    <div class="panel-body">
+        <div class="bg-danger" style="padding:10px;">
+            <p>说明：</p>
+            <p>1.开始年月度和结束年月度必须填写</p>
+            <p>2.将自动过滤掉已经生成水电费的房间</p>
+            <p>3.若开始年月度是2015-3，结束年月度是2015-3，则将使用2015-2和2015-3的电表底数，生成2015-3月水电费</p>
+            <p>4.若开始年月度是2015-2，结束年月度是2015-3，则将使用2015-1和2015-3的电表底数，生成2015-2月—2015-3月水电费</p>
+        </div>
+    </div>
+    <div class="panel-footer form-inline">
+        <form method="post" id="createForm" _url="{|U:'create'}">
+            <span>生成</span>
+            <input type="text" class="form-control" id="startYear" name="startYear" placeholder="开始年度" style="width:90px;"/>
+            <input type="text" class="form-control" id="startMonth" name="startMonth" placeholder="开始月度" style="width:90px;"/>
+            <span>—</span>
+            <input type="text" class="form-control" id="endYear" name="endYear" placeholder="结束年度" style="width:90px;"/>
+            <input type="text" class="form-control" id="endMonth" name="endMonth" placeholder="结束月度" style="width:90px;"/>
+            <span>的水电费</span>
+            <input type="button" class="btn btn-success" id="formSubmit" value="生成" style="margin-left:30px;"/>
+        </form>
+    </div>
+</div>
+<div class="content checkbox" style="position:fixed;bottom:0;top:305px;left:0;right:0;overflow:auto"></div>
+<div id="_mask" style="display:none;opacity: 0.3;vertical-align: middle;  position: absolute; background: none repeat scroll 0% 0% rgb(255, 255, 255); z-index: 80; top: 0px; left: 0px;bottom:0;right:0;">
+    <img src="__PUBLIC__/img/loading_64.gif" style="display: block;width:64px;height: 62px;margin:200px auto"/>
+</div>
+</body>
+</html>

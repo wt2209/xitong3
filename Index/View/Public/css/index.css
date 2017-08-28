@@ -1,0 +1,113 @@
+.clear{
+    clear: both;
+}
+
+.fixed{
+    position: fixed;
+}
+.page{
+    /*display: none;*/
+    left:65px;
+    float: left;
+    display: none;
+    /*使用js计算top值*/
+}
+.page a{
+    margin:5px 0px;
+}
+
+.notice{
+    margin:50px auto 10px;
+    color:#555;
+    font-size: 18px;
+    text-align: center;
+    padding:20px 0;
+
+}
+.btn-group a{
+    margin:20px;
+}
+#search{
+    height: 42px;
+    padding: 3px;
+    left:0;
+    top:0;
+    width: 100%;
+    z-index: 1020;
+    background-color: #fff;
+    border-bottom: 1px solid rgb(225,225,225);
+}
+#bottom{
+    height: 42px;
+    padding-left:50px;
+    left:0;
+    bottom:0;
+    width: 100%;
+    z-index: 1020;
+    background-color: #fff;
+    border-top: 1px solid rgb(225,225,225);
+}
+.bottom-message{
+    float: left;
+    line-height: 42px;
+    margin-left:20px;
+}
+.input-group{
+    margin-top: 20px;
+}
+.center{
+    margin: 0 auto;
+}
+#content{
+    margin-top: 40px;
+    padding:10px 0 0 140px;
+    overflow: hidden;
+}
+.building{
+    display: none;
+    left:0;
+    /*使用js计算top*/
+    height: auto;
+    overflow: hidden;
+}
+.building a{
+    margin:10px 0;
+}
+
+.type{
+    width:120px;
+    color:#555;
+    float: left;
+    margin-left: 200px;
+}
+.starttime, .endtime{
+    float: left;
+    width: 112px;
+    margin-left: 5px;
+}
+.endtime{
+    margin-right: -115px;
+}
+
+.error-message{
+    margin-right:170px;
+    text-align: center;
+    padding:20px;
+    font-size: 20px;
+    color:#555;
+}
+
+.modalLoadingIco{
+    display: block;
+    width:64px;
+    height: 62px;
+    margin:100px auto;
+    background: url(../img/loading_64.gif);
+}
+.modalLoadingError{
+    display: block;
+    text-align: center;
+    height: 62px;
+    font-size: 20px;
+    margin:100px auto;
+}

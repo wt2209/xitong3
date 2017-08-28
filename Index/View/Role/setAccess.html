@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <title>设置权限</title>
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/hdjs.css">
+    <link rel="stylesheet" href="__CONTROLLER_VIEW__/css/index.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/search.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/operation.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/hdjs.min.js"></script>
+    <script type="text/javascript" src="__CONTROLLER_VIEW__/js/index.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body>
+<form method="post" class="form-inline">
+    <input type="hidden" name="rid" value="{$role.rid}"/>
+
+    <div class="wrap checkbox">
+        <div class="bg-danger" style="padding:10px;font-size: 16px;">
+            <a href="{|U:'index'}" class="btn btn-info">返回角色列表</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;为 “ {$role.role_name} ” 设置权限
+        </div>
+        <div class="access">
+            <ul>
+                <list from="$nodes" name="$a">
+                    <li class="li1">
+                        <h3><label><input type="checkbox" class="parent" name="access[]" value="{$a.id}" <if value="$a.access">checked="checked"</if> />&nbsp;{$a.title}</label></h3>
+                        <?php if ($a['child']): ?>
+                        <ul class="level3">
+                            <list from="$a.child" name="$b">
+                                <li class="li2">
+                                    <label><input type="checkbox" class="child" name="access[]" value="{$b.id}" <if value="$b.access">checked="checked"</if>/>&nbsp;{$b.title}</label>
+                                </li>
+                            </list>
+                        </ul>
+                        <?php endif; ?>
+                    </li>
+                </list>
+            </ul>
+        </div>
+        <div style="height:80px;"></div>
+    </div>
+    <div id="bottom" class="fixed" style="padding-top: 4px;">
+
+            <input type="submit" class="btn btn-success" value="确定"/>
+    </div>
+</form>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>租赁布局</title>
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/room_list.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/map.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/hdjs.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap-datetimepicker.min.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/room_list.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/hdjs.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/operation.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap-datetimepicker.min.js"></script>
+</head>
+<body>
+    <div id="search" class="fixed">
+        <form action="{|U:'search'}" method="post" class="center">
+            <div class="form-group center"  style="width:650px;" >
+                <div class="col-xs-1  hd-w120" style="padding:0 2px">
+                    <select name="searchType" class="form-control">
+                        <option value="1">合同签署日</option>
+                        <option value="2">合同终止日</option>
+                    </select>
+                </div>
+                <div class="col-xs-1 hd-w120" style="padding:0 2px">
+                    <input type="text" readonly class="form-control" name="startTime" id="startTime" placeholder="开始时间">
+                    <script type="text/javascript">
+                        $('#startTime').datetimepicker({
+                            language:'cn',
+                            format: 'yyyy-mm-dd',
+                            todayBtn:true,
+                            autoclose:true,
+                            minView:2,
+                            viewSelect:'month',
+                            container:'#search' //父级
+                        });
+                    </script>
+                </div>
+                <div class="col-xs-2  hd-w120" style="padding:0 2px">
+                    <input type="text" readonly class="form-control" name="endTime" id="endTime" placeholder="截止时间">
+                    <script type="text/javascript">
+                        $('#endTime').datetimepicker({
+                            language:'cn',
+                            format: 'yyyy-mm-dd',
+                            todayBtn:true,
+                            autoclose:true,
+                            minView:2,
+                            viewSelect:'month',
+                            container:'#search' //父级
+                        });
+                    </script>
+                </div>
+                <div class="col-xs-4" style="padding:0 2px">
+                    <input type="text"  class="form-control" value="{$hd.get.keyword}" name="keyword"
+                           id="searchInput" placeholder="在 租赁区域 搜索...">
+                </div>
+                <div class="col-xs-1" style="padding:0 2px">
+                    <button class="btn btn-default" type="submit" id="searchButton">搜索</button>
+                    <!--搜索框获得焦点后弹出提示框 -->
+                    <script type="text/javascript" src="__PUBLIC__/js/search.js"></script>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- 选择楼号 -->
+    <div class="notice bg-danger">
+        <div class="btn-group">
+            <a href="{|U:'Rent/index', array('b'=>'红1')}"
+               class="btn btn-default <if value="$hd.get.b == '红1'">btn-primary</if>">红1</a>
+            <a href="{|U:'Rent/index', array('b'=>'1')}"
+               class="btn btn-default <if value="$hd.get.b == '1'">btn-primary</if>">1</a>
+            <a href="{|U:'Rent/index', array('b'=>'2')}"
+                class="btn btn-default <if value="$hd.get.b == '2'">btn-primary</if>">2</a>
+            <a href="{|U:'Rent/index', array('b'=>'3')}"
+               class="btn btn-default <if value="$hd.get.b == '3'">btn-primary</if>">3</a>
+            <a href="{|U:'Rent/index', array('b'=>'4')}"
+                class="btn btn-default <if value="$hd.get.b == '4'">btn-primary</if>">4</a>
+            <a href="{|U:'Rent/index', array('b'=>'5')}"
+               class="btn btn-default <if value="$hd.get.b == '5'">btn-primary</if>">5</a>
+            <a href="{|U:'Rent/index', array('b'=>'6')}"
+                class="btn btn-default <if value="$hd.get.b == '6'">btn-primary</if>">6</a>
+            <a href="{|U:'Rent/index', array('b'=>'8')}"
+                class="btn btn-default <if value="$hd.get.b == '8'">btn-primary</if>">8</a>
+            <a href="{|U:'Rent/index', array('b'=>'10')}"
+               class="btn btn-default <if value="$hd.get.b == '10'">btn-primary</if>">10</a>
+            <a href="{|U:'Rent/index', array('b'=>'12')}"
+               class="btn btn-default <if value="$hd.get.b == '12'">btn-primary</if>">12</a>
+            <a href="{|U:'Rent/index', array('b'=>'14')}"
+               class="btn btn-default <if value="$hd.get.b == '14'">btn-primary</if>">14</a>
+            <a href="{|U:'Rent/index', array('b'=>'高1')}"
+               class="btn btn-default <if value="$hd.get.b == '高1'">btn-primary</if>">高1</a>
+            <a href="{|U:'Rent/index', array('b'=>'高3')}"
+               class="btn btn-default <if value="$hd.get.b == '高3'">btn-primary</if>">高3</a>
+            <a href="{|U:'Rent/index', array('b'=>'高4')}"
+                class="btn btn-default <if value="$hd.get.b == '高4'">btn-primary</if>">高4</a>
+        </div>
+    </div>
+</body>
+</html>

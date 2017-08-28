@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title>已完工项目</title>
+  <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+  <link rel="stylesheet" href="__PUBLIC__/css/hdjs.css">
+  <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.0.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/hdjs.min.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/jquery.print.min.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="__CONTROLLER_VIEW__/js/underFinish.js"></script>
+</head>
+<body>
+<div class="container" style="margin-top: 20px;">
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        已完工项目
+      </div>
+      <table class="table" id="table">
+        <tr>
+          <th>报修人</th>
+          <th>位置/房间</th>
+          <th>报修内容</th>
+          <th>报修时间</th>
+          <th>审核人</th>
+          <th>审核时间</th>
+          <th>审核意见</th>
+          <th>完工时间</th>
+          <th>完工说明</th>
+          <th>项目评价</th>
+          <th class="no-print">操作</th>
+        </tr>
+        <foreach from="$finishedItems" key="$k" value="$finishedItem">
+          <tr id="print-{$underFinish.id}" class="no-print">
+            <td>{$finishedItem.name}</td>
+            <td>{$finishedItem.location}</td>
+            <td>{$finishedItem.content}</td>
+            <td>{$finishedItem.created_at}</td>
+            <td>{$finishedItem.reviewer}</td>
+            <td>{$finishedItem.reviewed_at}</td>
+            <td>{$finishedItem.review_remark}</td>
+            <td>{$finishedItem.finished_at}</td>
+            <td>{$finishedItem.finish_remark}</td>
+            <td>{$finishedItem.comment}</td>
+            <td >
+              <a href="{|U:'comment', array('id'=>$finishedItem['id'])}"
+                 class="btn btn-success btn-xs" >评价</a>
+            </td>
+          </tr>
+        </foreach>
+      </table>
+    </div>
+  </div>
+</div>
+<div id="_mask" style="display:none;opacity: 0.3; position: absolute; background: none repeat scroll 0% 0% rgb(255, 255, 255); z-index: 80; top: 0px; left: 0px;bottom:0;right:0;">
+  <img src="__PUBLIC__/img/loading_64.gif" style="display: block;width:64px;height: 62px;margin:200px auto"/>
+</div>
+</body>
+</html>

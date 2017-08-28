@@ -1,0 +1,11 @@
+#search{
+	width: 650px;
+    height: 44px;
+	float: left;
+}
+.center{
+	text-align: center;
+}
+#search input{
+	margin: 4px;
+}

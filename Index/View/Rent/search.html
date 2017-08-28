@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>租赁布局</title>
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/room_list.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/map.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/hdjs.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap-datetimepicker.min.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/room_list.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/hdjs.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/operation.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/room-remark.js"></script>
+</head>
+<body>
+    <div id="search" class="fixed">
+        <form action="{|U:'search'}" method="post" class="center">
+            <div class="form-group center"  style="width:650px;" >
+                <div class="col-xs-1  hd-w120" style="padding:0 2px">
+                    <select name="searchType" class="form-control">
+                        <option value="1"<if value="$hd.get.searchType == 1">selected</if>>合同签署日</option>
+                        <option value="2"<if value="$hd.get.searchType == 2">selected</if>>合同终止日</option>
+                    </select>
+                </div>
+                <div class="col-xs-1 hd-w120" style="padding:0 2px">
+                    <input type="text" readonly class="form-control" name="startTime" id="startTime" placeholder="开始时间"<if value="$hd.get.startTime">value="{$hd.get.startTime}"</if>>
+                    <script type="text/javascript">
+                        $('#startTime').datetimepicker({
+                            language:'cn',
+                            format: 'yyyy-mm-dd',
+                            todayBtn:true,
+                            autoclose:true,
+                            minView:2,
+                            viewSelect:'month',
+                            container:'#search' //父级
+                        });
+                    </script>
+                </div>
+                <div class="col-xs-2  hd-w120" style="padding:0 2px">
+                    <input type="text" readonly class="form-control" name="endTime" id="endTime" placeholder="截止时间"<if value="$hd.get.endTime">value="{$hd.get.endTime}"</if>>
+                    <script type="text/javascript">
+                        $('#endTime').datetimepicker({
+                            language:'cn',
+                            format: 'yyyy-mm-dd',
+                            todayBtn:true,
+                            autoclose:true,
+                            minView:2,
+                            viewSelect:'month',
+                            container:'#search' //父级
+                        });
+                    </script>
+                </div>
+                <div class="col-xs-4" style="padding:0 2px">
+                    <input type="text"  class="form-control" value="{$hd.get.keyword}" name="keyword"
+                           id="searchInput" placeholder="在 租赁区域 搜索...">
+                </div>
+                <div class="col-xs-1" style="padding:0 2px">
+                    <button class="btn btn-default" type="submit" id="searchButton">搜索</button>
+                    <!--搜索框获得焦点后弹出提示框 -->
+                    <script type="text/javascript" src="__PUBLIC__/js/search.js"></script>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div id="map">
+        <!-- 选择楼号 -->
+        <div class="building fixed">
+            <div class="btn-group-vertical">
+                <a href="{|U:'Rent/index', array('b'=>'红1')}"
+                   class="btn btn-default <if value="$hd.get.b == '红1'">btn-primary</if>">红1</a>
+                <a href="{|U:'Rent/index', array('b'=>'1')}"
+                   class="btn btn-default <if value="$hd.get.b == '1'">btn-primary</if>">1</a>
+                <a href="{|U:'Rent/index', array('b'=>'2')}"
+                   class="btn btn-default <if value="$hd.get.b == '2'">btn-primary</if>">2</a>
+                <a href="{|U:'Rent/index', array('b'=>'3')}"
+                   class="btn btn-default <if value="$hd.get.b == '3'">btn-primary</if>">3</a>
+                <a href="{|U:'Rent/index', array('b'=>'4')}"
+                   class="btn btn-default <if value="$hd.get.b == '4'">btn-primary</if>">4</a>
+                <a href="{|U:'Rent/index', array('b'=>'5')}"
+                   class="btn btn-default <if value="$hd.get.b == '5'">btn-primary</if>">5</a>
+                <a href="{|U:'Rent/index', array('b'=>'6')}"
+                   class="btn btn-default <if value="$hd.get.b == '6'">btn-primary</if>">6</a>
+                <a href="{|U:'Rent/index', array('b'=>'8')}"
+                   class="btn btn-default <if value="$hd.get.b == '8'">btn-primary</if>">8</a>
+                <a href="{|U:'Rent/index', array('b'=>'10')}"
+                   class="btn btn-default <if value="$hd.get.b == '10'">btn-primary</if>">10</a>
+                <a href="{|U:'Rent/index', array('b'=>'12')}"
+                   class="btn btn-default <if value="$hd.get.b == '12'">btn-primary</if>">12</a>
+                <a href="{|U:'Rent/index', array('b'=>'14')}"
+                   class="btn btn-default <if value="$hd.get.b == '14'">btn-primary</if>">14</a>
+                <a href="{|U:'Rent/index', array('b'=>'高3')}"
+                   class="btn btn-default <if value="$hd.get.b == '高1'">btn-primary</if>">高1</a>
+                <a href="{|U:'Rent/index', array('b'=>'高3')}"
+                   class="btn btn-default <if value="$hd.get.b == '高3'">btn-primary</if>">高3</a>
+                <a href="{|U:'Rent/index', array('b'=>'高4')}"
+                   class="btn btn-default <if value="$hd.get.b == '高4'">btn-primary</if>">高4</a>
+            </div>
+        </div>
+        <script type="text/javascript" src="__PUBLIC__/js/buildingPosition.js"></script>
+        <!-- 选择楼号 -->
+    </div>
+
+    <div id="content">
+        <if value="$room">
+            <p class="bg-success mr160 error-message" >共找到 {$room[0]['realCount']} 个满足条件的住户</p>
+            <div class="room_list">
+                <list from="$room" name="$r">
+                    <div class="room rent_room">
+                        <div class="title">
+                            <h3>
+                                <if value="$r.isHigh">
+                                    {$r.building}-{$r.room}
+                                    <else />
+                                    {$r.building}-{$r.unit}-{$r.room}
+                                </if>
+                            </h3>
+                            <div class="room_detail">
+                                <span>{$r.room_remark}</span>
+                                <form name="room_remark">
+                                    <input type="hidden" name="room_id" value="{$r.room_id}"/>
+                                    <textarea name="room_remark" class="form-control hide" _url="{|U:'Room/setRoomRemark'}"></textarea>
+                                </form>
+                            </div>
+                        </div>
+                        <if value="$r.person">
+                            <div class="person rent_person">
+                                <p class="operation">
+                                    <a href="javascript:;" class="btn btn-primary btn-xs modalShow" _url="{|U:'Modal/rentChargeModal',array('id'=>$r['person']['id'],'type'=>4)}">缴费</a>
+                                </p>
+                                <div class="l">
+                                    <div class="name">
+                                        {$r.person.name}
+                                        <span class="fs12"><if value="$r.person.sex == 1">(男)<elseif value="$r.person.sex == 2"/>(女)</if></span>
+                                    </div>
+                                    <p class="department">{$r.person.department}</p>
+                                    <p class="telphone">{$r.person.tel}</p>
+                                </div>
+                                <div class="r">
+                                    <p>劳动合同：</p>
+                                    <p>{$r.person.contract_s|hd_date}—<if value="$r.person.contract_e">{$r.person.contract_e|hd_date}<elseif value="$r.person.contract_e == 0"/>无固定期</if></p>
+                                    <p style="height:10px;"></p>
+                                    <p>租赁合同：</p>
+                                    <p>{$r.person.rent_s|hd_date}—{$r.person.rent_e|hd_date}</p>
+                                </div>
+                                <div class="d">
+                                    <p><strong>身份证号：</strong>{$r.person.identify}</p>
+                                    <p class="remark"><strong>备注：</strong>{$r.person.remark}</p>
+                                    <a href="javascript:;" _id="{$r.person.id}"
+                                       class="btn btn-warning btn-xs quitButton">退租</a>
+                                    <a href="javascript:;" _url="{|U:'Modal/EditModal',array('id'=>$r['person']['id'],'type'=>4)}"
+                                       class="btn btn-success btn-xs modalShow">修改</a>
+                                    <a href="javascript:;" _url="{|U:'Modal/rentRenewModal',array('id'=>$r['person']['id'],'type'=>4)}}"
+                                       class="btn btn-success btn-xs modalShow">续签</a>
+                                    <a href="javascript:;" _id="{$r.person.id}"
+                                       class="btn btn-danger btn-xs delButton">删除</a>
+                                </div>
+                            </div>
+                        <else />
+                            <div class="person">
+                                <a href="javascript:;" class="rent_empty modalShow" _room_id="{$r.room_id}"
+                                   _url="{|U:'Modal/AddModal', array('room_id'=>$r['room_id'],'type'=>4)}" title="点击进行入住操作"></a>
+                            </div>
+                        </if>
+                    </div>
+                </list>
+            </div>
+        <else/>
+            <p class="bg-warning mr160 error-message" >没有找到满足条件的信息。。。</p>
+        </if>
+    </div>
+
+    <!-- 退房确认 模态框 -->
+    <div id="quitModal" class="modal fade">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">退房确认</h4>
+                </div>
+                <div class="modal-body">
+                    <p>确认要进行退租操作吗？</p>
+                </div>
+                <div class="modal-footer">
+                    <form id="quitForm">
+                        <input type="hidden" name="id" value=""/>
+                    </form>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+                    <a href="javascript:;" id="quitConfirm" type="button" class="btn btn-primary">确 定</a>
+                    <script type="text/javascript">
+                        $('#quitConfirm').click(function(){
+                            $('#quitModal').modal('hide')
+                            hd_ajax("{|U:'quit'}", $('#quitForm').serialize(), function(){
+                                location.reload()
+                                return false;
+                            });
+                        })
+                    </script>
+                </div>
+            </div><!-- /.Modal-content -->
+        </div>
+    </div>
+    <!-- 退房确认 模态框 -->
+
+    <!-- 删除确认 模态框 -->
+    <div id="delModal" class="modal fade">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">删除确认</h4>
+                </div>
+                <div class="modal-body">
+                    <p>确认要删除吗？</p>
+                    <form id="delForm">
+                        <input type="hidden" name="id"/>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+                    <a href="javascript:;" id="delConfirm" type="button" class="btn btn-primary">确 定</a>
+                    <script type="text/javascript">
+                        $('#delConfirm').click(function(){
+                            $('#delModal').modal('hide')
+                            hd_ajax("{|U:'del'}", $('#delForm').serialize(), function(){
+                                location.reload()
+                                return false;
+                            });
+                        })
+                    </script>
+                </div>
+            </div><!-- /.Modal-content -->
+        </div><!-- /.Modal-dialog -->
+    </div>
+    <!-- 删除确认 模态框 -->
+
+    <!-- 模态框 -->
+    <div id="MyModal" class="modal fade"></div>
+    <script type="text/javascript">
+        $('#MyModal').on('shown.bs.modal', function (e) {
+            $('#MyModal').find('input').eq(1).focus();
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!-- 调房 模态框 -->
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">房间调整</h4>
+        </div>
+        <div class="modal-body">
+            <form id="workerMoveForm" class="form-horizontal">
+                <!-- 姓名 -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">姓名</label>
+                    <div class="col-sm-3">
+                        <input type="hidden" name="id" value="{$person.id}"/>
+                        <p class="control-label person-name" style="text-align:left;">{$person.name}</p>
+                    </div>
+                </div>
+                <!--&lt;!&ndash; 现房间号 &ndash;&gt;
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">现房间号</label>
+                    <div class="col-sm-3">
+                        <p class="control-label now-room" style="text-align:left;">{$room.roomStr}</p>
+                    </div>
+                </div>-->
+                 <!--调整到房间号-->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">调整到</label>
+                    <div class="col-sm-10">
+                        <input type="text" name="moveto" value="" class="form-control">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+            <a href="javascript:;" type="button" id="workerMoveConfirm" class="btn btn-primary">确 定</a>
+            <script type="text/javascript">
+                $('#workerMoveConfirm').click(function(){
+                    $('#MyModal').modal('hide')
+                    hd_ajax("{|U:'Worker/move'}", $('#workerMoveForm').serialize(), function(){
+                        location.reload()
+                        return false;
+                    });
+                })
+            </script>
+        </div>
+    </div><!-- /.Modal-content -->
+</div><!-- /.Modal-dialog -->
+<!-- 调房 结束 模态框 -->

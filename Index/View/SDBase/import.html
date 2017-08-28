@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="__PUBLIC__/bootstrap-3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/index.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/hdjs.css">
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/search.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/hdjs.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__CONTROLLER_VIEW__/js/import.js"></script>
+    <script>
+        //文件上传成功后的回调函数
+        function callback(sData){
+            $('.content').html(sData);
+            document.getElementById("file").outerHTML = document.getElementById("file").outerHTML;
+
+            $('#_mask').hide();
+        }
+    </script>
+</head>
+<body>
+<div class="panel panel-success">
+    <div class="panel-heading form-inline">
+        <a href="{|U:'index'}" class="btn btn-warning btn-sm" >返回底数列表</a>&nbsp;&nbsp;&nbsp;
+        从文件导入
+    </div>
+    <div class="panel-body">
+        <div class="bg-danger" style="padding:10px;">
+            <p>说明：</p>
+            <p>1.年度和月度必须填写</p>
+            <p>2.约定：2015-4-28日或2015-5-1日抄的表，则年月度应该为2015-4</p>
+            <p>3.必须是EXCEL97-2003格式，即文件扩展名必须是“ .xls ”。且必须是第一个工作表</p>
+            <p>4.EXCEL文件的内容格式必须跟下图中的格式一致</p>
+            <p>5.将自动过滤掉房间号错误、重复，或者水表数和电表数都为空的项</p>
+            <p>6.若指定了总的抄表人和抄表时间，则各分项中可不用填写</p>
+            <p>7.抄表时间格式最好为：2015-5-12 。若输入的格式错误，将使用当前时间 </p>
+        </div>
+    </div>
+    <form method="post" target="hidden_iframe" enctype="multipart/form-data">
+        <div class="panel-footer form-inline" style="overflow: hidden;">
+            <div style="width:550px;float: left;">
+                <input type="text" class="form-control" style="width: 60px;margin-bottom: 15px;" id="year" name="year" placeholder="年度"/>
+                <input type="text" class="form-control" style="width: 60px;margin-bottom: 15px;" id="month" name="month" placeholder="月度"/>
+                <input type="text" class="form-control" style="width: 100px;margin-bottom: 15px;" id="total_name" name="totalName" placeholder="总抄表人"/>
+                <input type="text" class="form-control" style="width: 100px; margin-bottom: 15px;" id="total_read_time" name="totalReadTime" placeholder="总抄表时间"/>
+                <input type="file" name="file" id="file"/>
+                <input type="hidden" name="random" id="random" value=""/>
+                <input type="submit" class="btn btn-success" id="addSDBaseSubmit" style="margin-top:10px;" value="提交"/>
+            </div>
+            <div style="float: left; width:530px;">
+                <p>EXCEL文件格式：</p>
+                <img src="__CONTROLLER_VIEW__/img/sample.png" style="margin:10px;"/>
+            </div>
+        </div>
+    </form>
+
+    <!--用于模拟页面无刷新请求-->
+    <iframe name="hidden_iframe" scrolling="none" id="hidden_iframe" style="display: none"></iframe>
+    <!--用于模拟页面无刷新请求-->
+</div>
+<div class="content" style="position:fixed;bottom:0;top:450px;left:0;right:0;overflow:auto"></div>
+<div id="_mask" style="display:none;opacity: 0.3; position: absolute; background: none repeat scroll 0% 0% rgb(255, 255, 255); z-index: 80; top: 0px; left: 0px;bottom:0;right:0;">
+    <img src="__PUBLIC__/img/loading_64.gif" style="display: block;width:64px;height: 62px;margin:200px auto"/>
+</div>
+</body>
+</html>

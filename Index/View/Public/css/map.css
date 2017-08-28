@@ -1,0 +1,188 @@
+.map_box{
+	top:70px;
+	left:380px;
+	width:370px;
+	padding:20px 40px 20px 20px;
+	height: 435px;
+	position: relative;
+	z-index: 1000;
+	background:#fff;
+}
+.map_box a{
+	text-decoration: none;
+	color:#000;
+}
+.unit{		
+	display: block;
+	text-align: center;
+	float: right;
+	margin: 0 0 13px 22px ;
+	height: 23px;
+	line-height: 28px;
+}
+
+/*多层*/
+/*大学生颜色*/
+.college{
+	background: url(../img/background.png) no-repeat 0px 0px ;
+}
+.college:hover{
+	background-position :-93px 0px ;
+}
+/*派遣工背景*/
+.dispatch{
+	background: url(../img/background.png) no-repeat 0px -27px ;
+}
+.dispatch:hover{
+	background-position:-93px -27px ;
+}
+/*租赁背景*/
+.rent{
+	background: url(../img/background.png) no-repeat 0px -81px ;
+}
+.rent:hover{
+	background-position:-93px -81px ;
+}
+
+/*高层背景*/
+/*职工*/
+.worker_h{
+	background: url(../img/worker.png) 0 0 no-repeat;
+}
+.worker_h:hover{
+	background: url(../img/worker_hover.png);
+}
+/*租赁*/
+.rent_h{
+	background: url(../img/rent.png) 0 0 no-repeat;
+}
+.rent_h:hover{
+	background: url(../img/rent_hover.png);
+}
+
+
+/*颜色*/
+.college_color{
+	background-color:	#428bca;
+}
+.worker_color{
+	background-color:	#5bc0de;
+}
+.dispatch_color{
+	background-color:	#5cb85c;
+}
+.rent_color{
+	background-color:	#f0ad4e;
+}
+.kong{
+	background: #ccc;
+}
+
+
+
+/*单元数  2个单元*/
+.unit_2{
+	width:34px;
+}
+.unit_3{
+	width:51px;
+}
+.unit_4{
+	width:68px;
+}
+.unit_5{
+	width:85px;
+}
+.clear{
+	clear: both;
+}
+.bd{
+	border: 1px solid #ccc;
+	color:#ccc;
+	margin-right: 10px;
+}
+.centerRoad{
+	font-size: 12px;
+	text-align: center;
+	height: 20px;
+	margin-bottom: 10px;
+	line-height: 20px;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	margin-right: -16px;
+	margin-left: 110px;
+}
+.gao a{
+	width: 40px;
+	height: 30px;
+	position: absolute;
+	line-height: 30px;
+	text-align: center;
+}
+.gao3{
+	left:80px;
+	top:20px;
+}
+.gao4{
+	left:135px;
+	top:20px;
+}
+.gao2{
+	left:125px;
+	top:60px;
+}
+.gao1{
+	left:135px;
+	top:100px;
+}
+.gate{
+	font-size: 14px;
+	position: absolute;
+	right:5px;
+	bottom:10px;
+	width: 30px;
+	height: 16px;
+	line-height: 16px;
+	text-align: right;
+    color:#555;
+}
+.note{
+	border: 1px solid #ccc;
+	box-shadow: 0 0 2px 1px #ccc;
+	width: 150px;
+	height: 200px;
+	padding:5px;
+	position: absolute;
+	left:10px;
+	bottom:10px;
+	line-height: 18px;
+	font-size: 12px;
+}	
+.note i{
+	display: block;
+	font-weight: bolder;
+	font-size: 14px;
+	padding-bottom:5px; 
+}
+.note p{
+	float: left;
+	width:100%;
+    margin:0 0 15px 0;
+}
+.note span{
+	width: 51px;
+	height: 20px;
+	float: left;
+	margin-right: 5px;
+	display: inline-block;
+}
+.north{
+	position: absolute;
+	left: 40px;
+	top: 95px;
+	width: 30px;
+	height: 20px;
+	padding-top: 60px;
+	text-align: center;
+	background: url(../img/north.png) no-repeat 0 0;
+}

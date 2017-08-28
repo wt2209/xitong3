@@ -1,0 +1,105 @@
+<!-- 职工个人床位费 模态框 -->
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">单身床位费缴费</h4>
+            </div>
+            <div class="modal-body">
+                <form id="workerRentChargeForm" class="form-horizontal">
+                    <!-- 房间号 -->
+                    <!--<div class="form-group">
+                        <label class="col-sm-2 control-label">房间号</label>
+                        <div class="col-sm-10">
+                            <p class="control-label person-name" style="text-align:left;">
+                                高1-501
+                            </p>
+                        </div>
+                    </div>-->
+                    <!-- 姓名 -->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">姓名</label>
+                        <div class="col-sm-8">
+                            <p class="control-label person-name" style="text-align:left;">
+                                <input type="hidden" name="id" value="{$person.id}"/>
+                                {$person.name}
+                            </p>
+                        </div>
+                    </div>
+                    <list from="$allTypes" name="$a">
+                        <if value="$a.name == 'pledge'">
+                            <if value="!$isPledgeCharged">
+                                <!-- 押金 -->
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">{$a.title}</label>
+                                    <div class="col-sm-2">
+                                        <input class="form-control" name="{$a.name}[money]" type="text" placeholder="金额">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input class="form-control" name="{$a.name}[remark]" type="text"  placeholder="费用说明">
+                                    </div>
+                                </div>
+                            </if>
+                        <else />
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">{$a.title}</label>
+                                <div class="col-sm-2">
+                                    <input class="form-control" name="{$a.name}[money]" type="text" placeholder="金额">
+                                </div>
+                                <div class="col-sm-6">
+                                    <input class="form-control" name="{$a.name}[remark]" type="text"  placeholder="费用说明">
+                                </div>
+                            </div>
+                        </if>
+                    </list>
+                    <!--&lt;!&ndash; 床位费 &ndash;&gt;
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">床位费</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" name="rental[money]" type="text" placeholder="金额">
+                        </div>
+                        <div class="col-sm-6">
+                            <input class="form-control" name="rental[remark]" type="text"  placeholder="费用说明">
+                        </div>
+                    </div>-->
+                    <!-- 缴费时间 -->
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label workerChargeTimePosition ">缴费时间</label>
+                        <div class="col-sm-8">
+                            <input type="hidden"/>
+                            <input class="form-control" id="workerChargeTime" readonly
+                                   name="charge_time" type="text" placeholder="不填则以当前时间为准" />
+                            <script type="text/javascript">
+                                $('#workerChargeTime').datetimepicker({
+                                    language:'cn',
+                                    format: 'yyyy-mm-dd',
+                                    todayBtn:true,
+                                    autoclose:true,
+                                    minView:2,
+                                    viewSelect:'month',
+                                    container:'.workerChargeTimePosition'
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+                <a href="javascript:;" type="button" id="workerRentChargeConfirm" class="btn btn-primary">确 定</a>
+                <script type="text/javascript">
+                    $('#workerRentChargeConfirm').click(function(){
+                        //清空原数据
+                        $(this).find('input').val('');
+                        $(this).find('textarea').html('');
+                        $('#MyModal').modal('hide')
+                        hd_ajax("{|U:'SingleRentCharge/charge'}", $('#workerRentChargeForm').serialize(), function(){
+                            // location.reload(true) 会强制刷新页面，导致滚动条归零（firefox）
+                            return false;
+                        });
+                    })
+                </script>
+            </div>
+        </div>
+    </div>
+<!-- 职工个人床位费 结束 模态框 -->
