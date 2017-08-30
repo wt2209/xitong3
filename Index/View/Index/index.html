@@ -69,10 +69,13 @@
                         onclick="openapp('{|U:'Dispatch/index'}', 'DispatchList','派遣工');">
                     派遣工
                 </a>
-                <a class="btn btn-small btn-danger" href="javascript:;"
+                <a class="btn btn-small btn-success re-position"  href="javascript:;"
                    onclick="openapp('{|U:'Rent/index'}', 'RentList','租赁住户');">
                     租赁
+                    <span class="notify notify-success" id="unreviewed"
+                          url="{|U:'Repair/notify'}" style="display: none">0</span>
                 </a>
+
             </div>
             <div id="search" >
                 <div class="form-inline input-group center" >
@@ -154,6 +157,38 @@
 
 
 <ul class="nav nav-list">
+
+    <li >
+        <a href="javascript:;" class="dropdown-toggle">
+            <i class="fa fa-group normal"></i>
+            <span class="menu-text normal">房间管理</span>
+            <b class="arrow fa fa-angle-right normal"></b>
+            <i class="fa fa-reply back"></i>
+            <span class="menu-text back">返回</span>
+        </a>
+        <ul  class="submenu">
+
+            <li>
+                <a href="javascript:;" onclick="openapp('{|U:"Room/index"}','roomIndex','所有房间');">
+                <i class="fa fa-caret-right"></i>
+                <span class="menu-text">所有房间</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="javascript:;" onclick="openapp('{|U:"Room/types"}','roomTypes','房间类型');">
+                <i class="fa fa-caret-right"></i>
+                <span class="menu-text">房间类型</span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" onclick="openapp('{|U:"Room/addType"}','roomAddType','添加类型');">
+                <i class="fa fa-caret-right"></i>
+                <span class="menu-text">添加类型</span>
+                </a>
+            </li>
+        </ul>
+    </li>
 <li >
     <a href="javascript:;" class="dropdown-toggle">
         <i class="fa fa-group normal"></i>
@@ -572,5 +607,6 @@
             });
 </script>
 <script src="__CONTROLLER_VIEW__/statics/js/index.js"></script>
+<script src="__CONTROLLER_VIEW__/js/repairNotify.js"></script>
 </body>
 </html>

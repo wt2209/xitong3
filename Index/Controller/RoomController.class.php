@@ -2,6 +2,60 @@
 
 class RoomController extends AuthController
 {
+    protected $roomModel;
+
+    public function __init() {
+        $this->roomModel = K('room');
+    }
+    public function index()
+    {
+        $rooms = $this->roomModel->getAllRoom();
+        $this->assign('rooms', $rooms);
+        $this->display();
+    }
+
+    /**
+     * 所有房间类型
+     */
+    public function types()
+    {
+        $types = $this->roomModel->getTypes();
+        $this->assign('types', $types);
+        $this->display();
+    }
+
+    /**
+     * 添加房间类型
+     */
+    public function addType()
+    {
+        $this->display();
+    }
+
+    public function storeType()
+    {
+        $data = array(
+            'type_name'=>Q('type_name'),
+            'description'=>Q('description'),
+            'created_at'=>date('Y-m-d H:i:s')
+        );
+        $this->roomModel->addType($data);
+        $this->success();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function setRoomRemark()
     {
         if (IS_AJAX) {

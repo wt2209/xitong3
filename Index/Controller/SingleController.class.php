@@ -88,14 +88,15 @@ abstract class SingleController extends CommonController
             if (!empty($room[$k]['persons'])) {
                 $realCount += count($room[$k]['persons']);
             }
+            $room[$k]['length'] = ($count > $room[$k]['person_number']) ? $count : $room[$k]['person_number'];
 
             //计算每个房间最大人员数量
-            if (mb_strpos($room[$k]['building'], '高') === 0)
-                $room[$k]['length'] = ($count > $this->peopleNumberPerRoom) ? $count : $this->peopleNumberPerRoom;
-            elseif (mb_strpos($room[$k]['room'], '6') === 0)
-                $room[$k]['length'] = ($count > $this->peopleNumberPerRoomForSixFloor) ? $count : $this->peopleNumberPerRoomForSixFloor;
-            else
-                $room[$k]['length'] = ($count > $this->peopleNumberPerRoom) ? $count : $this->peopleNumberPerRoom;
+//            if (mb_strpos($room[$k]['building'], '高') === 0)
+//                $room[$k]['length'] = ($count > $this->peopleNumberPerRoom) ? $count : $this->peopleNumberPerRoom;
+//            elseif (mb_strpos($room[$k]['room'], '6') === 0)
+//                $room[$k]['length'] = ($count > $this->peopleNumberPerRoomForSixFloor) ? $count : $this->peopleNumberPerRoomForSixFloor;
+//            else
+//                $room[$k]['length'] = ($count > $this->peopleNumberPerRoom) ? $count : $this->peopleNumberPerRoom;
         }
         //将实际人数存入到数组的第一个元素里
         if (!empty($room)) {

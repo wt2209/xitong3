@@ -23,11 +23,13 @@ class WorkerController extends SingleController
     {
         $this->_db = K('Worker');
         $this->_room = K('Room');
-        $this->peopleNumberPerRoom = 4;
         //分页
         $this->page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         //楼号
-        $this->b = isset($_GET['b']) ? Q('get.b') : '';
+        $this->_roomType = 2;
+
+        // $this->b
+        $this->getCurrentBuilding();
     }
 
     /**
@@ -41,8 +43,7 @@ class WorkerController extends SingleController
             exit;
         }*/
         //在职工房间查找:'type'=>2
-        $this->b = $this->b ? $this->b : '高2';
-        $where = array('building' => $this->b, 'room_type' => 2);
+        $where = array('building' => $this->b, 'type_id' => 2);
         //limit 20个房间一页   即5层一页
         $limit = (($this->page - 1) * $this->onePageNum) . ',' . $this->onePageNum;
         $room = $this->getRoomListByWhere($where, $limit);

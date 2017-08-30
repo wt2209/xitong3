@@ -10,7 +10,10 @@ $(function(){
         $.post(url, $("#form").serialize(), function(data){
             $('#_mask').hide();
             hd_alert({message:data.message,timeout:0.5, success: function(){
+                //console.log(window.parent)
+                window.parent.queryNotifyData();
                 window.location.href = callbackUrl;
+
             }});
         }, 'json');
         return false;

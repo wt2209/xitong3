@@ -15,14 +15,22 @@ class RoomModel extends Model{
      */
     public function getAllRoom()
     {
-        $data = array();
-        if($data = S("room")){
-            return $data;
-        }
-        $data = $this->select();
-        //缓存
-        S('room', $data);
-        return $data;
+        return $this->select();
+    }
+
+    public function getTypes()
+    {
+        return M('room_type')->select();
+    }
+
+    public function addType($data)
+    {
+        return M('room_type')->insert($data);
+    }
+
+    public function getOneRoomByType($typeId)
+    {
+        return $this->where(array('type_id'=>$typeId))->find();
     }
 
     /**
@@ -37,9 +45,9 @@ class RoomModel extends Model{
             return $this->where($where)->find();
         else{
             if ($limit)
-                return $this->where($where)->order('building asc, unit asc, room asc')->limit($limit)->select();
+                return $this->where($where)->order('building asc, unit asc, room_name asc')->limit($limit)->select();
             else
-                return $this->where($where)->order('building asc, unit asc, room asc')->select();
+                return $this->where($where)->order('building asc, unit asc, room_name asc')->select();
         }
     }
 

@@ -52,14 +52,14 @@
 	<div class="btn-group-vertical page fixed">
 		{$page}
 	</div>
-	<div id="content">
-        <p class="bg-success mr160 error-message" >{$hd.get.b}<sup>#</sup>楼<if value="$hd.get.page">{$hd.get.page}<else/>1</if>单元 共有 {$room[0]['realCount']} 个住户</p>
-        <list from="$room" name="$r">
+	<div id="content" class="container">
+        <!--<p class="bg-success mr160 error-message" >{$hd.get.b}<sup>#</sup>楼<if value="$hd.get.page">{$hd.get.page}<else/>1</if>单元 共有 {$room[0]['realCount']} 个住户</p>-->
+        <foreach from="$room" key="$k" value="$r">
             <div class="room">
                 <div class="title">
                     <h3>
                         <a href="{|U:'search', array('keyword'=>$r['building'].'-'.$r['unit'].'-'.$r['room'])}"
-                           class="room-name">{$r.building}-{$r.unit}-{$r.room}</a>
+                           class="room-name">{$r.display_name}</a>
                         <input type="hidden" name="room_id" value="{$r.room_id}"/>
                         <!--<p class="operation">-->
                             <!--<a href="javascript:;" class="btn btn-success btn-xs">缴费</a>-->
@@ -127,7 +127,7 @@
                     <?php endfor;?>
                 </div>
             </div>
-        </list>
+        </foreach>
 	</div>
 
 

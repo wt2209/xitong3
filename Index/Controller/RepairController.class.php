@@ -11,6 +11,20 @@ class RepairController extends AuthController
         $this->repairModel = K('repair');
     }
 
+
+    /**
+     * 推送未处理消息
+     */
+    public function notify()
+    {
+        $return = array(
+            'data'=>array(
+                'unreviewedCount'=>0
+            ),
+            'status'=>1,
+        );
+        $this->ajax($return);
+    }
     /**
      * 添加维修项目
      */

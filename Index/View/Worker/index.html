@@ -49,12 +49,12 @@
 		{$page}
 	</div>
 	<div id="content">
-        <p class="bg-success mr160 error-message" >{$hd.get.b}<sup>#</sup>楼第<if value="$hd.get.page">{$hd.get.page}<else/>1</if> 页 共有 {$room[0]['realCount']} 个住户</p>
-        <list from="$room" name="$r">
+        <!--<p class="bg-success mr160 error-message" >{$hd.get.b}<sup>#</sup>楼第<if value="$hd.get.page">{$hd.get.page}<else/>1</if> 页 共有 {$room[0]['realCount']} 个住户</p>-->
+        <foreach from="$room" key="$k" value="$r">
             <div class="room">
                 <div class="title">
                     <h3>
-                        <a href="{|U:'search', array('keyword'=>$r['building'].'-'.$r['room'])}" class="room-name">{$r.building}-{$r.room}</a>
+                        <a href="{|U:'search', array('keyword'=>$r['building'].'-'.$r['room'])}" class="room-name">{$r.display_name}</a>
                         <input type="hidden" name="room_id" value="{$r.room_id}"/>
                         <p class="operation">
                             <a href="javascript:;" _url="{|U:'Modal/workerSDChargeModal', array('room_id'=>$r['room_id'],'type'=>2)}"
@@ -125,7 +125,7 @@
                     <?php endfor;?>
                 </div>
             </div>
-        </list>
+        </foreach>
 	</div>
 
     <!-- 退房确认 模态框 -->

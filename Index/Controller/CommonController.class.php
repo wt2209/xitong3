@@ -19,6 +19,11 @@ abstract class CommonController extends AuthController
     protected $_room;
 
     /**
+     * 房间类型id
+     */
+    protected $_roomType;
+
+    /**
      * 当前楼号
      */
     protected $b;
@@ -167,6 +172,19 @@ abstract class CommonController extends AuthController
                 $this->ajax(array('status' => 0, 'message' => '错误：没有这个人！'));
         } else {
             halt('错误：非法请求！');
+        }
+    }
+
+    protected function getCurrentBuilding()
+    {
+        //楼号
+        //不存在楼号
+        if (!isset($_GET['b'])) {
+            $room = $this->_room->getOneRoomByType($this->_roomType);
+            $this->b = $room['building'];
+            $_GET['b'] = $this->b;
+        } else {
+            $this->b = Q('get.b');
         }
     }
 

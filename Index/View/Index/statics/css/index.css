@@ -9,3 +9,20 @@
 #search input{
 	margin: 4px;
 }
+
+
+.re-position{
+	position: relative;
+}
+.notify{
+	position: absolute;
+	top: -6px;
+	right: -12px;
+	text-align: center;
+	font-size: 11px;
+	padding: 3px 3px 5px 3px;
+	line-height: 0.9;
+	border-radius: 6px;
+	color: white;
+	background-color: red;
+}

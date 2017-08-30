@@ -10,7 +10,7 @@ return array(
     'DB_PORT'                       => 3306,        //端口
     'DB_USER'                       => 'root',      //帐号
     'DB_PASSWORD'                   => 'root',          //密码
-    'DB_DATABASE'                   => 'bsic3',          //数据库
+    'DB_DATABASE'                   => 'bsic3_new',          //数据库
     'DB_PREFIX'                     => 'bh_',          //表前缀
     /********************************模板参数********************************/
     'TPL_PATH'                      => 'View',      //目录
@@ -57,5 +57,6 @@ return array(
     'ELECTRIC_PRICE'=>0.55,
     //费用精度（小数点后保留几位）
     'CHARGE_PRECISION'=>2,
+    // 分页中每页的条数
 );
 ?>
